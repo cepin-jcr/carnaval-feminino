@@ -199,7 +199,11 @@
       } catch (error) {
         errorMessage.innerText = error.message;
         errorAlert.classList.remove('hidden');
-        showToast('Erro: ' + error.message);
+        if (error.message.includes('aguarda aprovação')) {
+          showToast(error.message + ' ⏳');
+        } else {
+          showToast('Erro: ' + error.message);
+        }
       }
     }
   </script>

@@ -210,7 +210,12 @@
           window.location.href = 'admin.html';
         }, 1000);
       } catch (error) {
-        showToast('Erro: ' + error.message);
+        if (error.message.includes('aguarda aprovação')) {
+          showToast(error.message + ' ⏳');
+          setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+        } else {
+          showToast('Erro: ' + error.message);
+        }
       }
     }
   </script>

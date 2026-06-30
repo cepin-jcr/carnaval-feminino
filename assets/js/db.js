@@ -1175,13 +1175,10 @@ async function register(email, password) {
   if (error) throw new Error(error.message);
   if (!data || !data.user) throw new Error('Erro ao criar conta.');
 
-  const user = {
-    id: data.user.id,
-    email: data.user.email,
-    isAdmin: false
-  };
-  setCurrentUser(user);
-  return user;
+  // Ensure they are logged out so they can't access anything
+  await supabase.auth.signOut();
+  
+  throw new Error("Conta criada! Sua conta aguarda aprovação da administração.");
 }
 
 async function login(email, password) {
@@ -1192,21 +1189,28 @@ async function login(email, password) {
   if (error) throw new Error(error.message);
   if (!data || !data.user) throw new Error('Credenciais inválidas.');
   
-  // Fetch profile to verify if they are admin
+  // Fetch profile to verify if they are admin and if they are approved
   let isAdmin = false;
+  let isApproved = false;
   try {
     const { data: profile } = await supabase
       .from('perfis')
-      .select('is_admin')
+      .select('is_admin, is_approved')
       .eq('id', data.user.id)
       .single();
     if (profile) {
       isAdmin = !!profile.is_admin;
+      isApproved = !!profile.is_approved;
     }
   } catch (e) {
     console.error('Error fetching admin status:', e);
   }
   
+  if (!isApproved && !isAdmin) {
+    await supabase.auth.signOut();
+    throw new Error('Sua conta aguarda aprovação da administração.');
+  }
+
   const user = {
     id: data.user.id,
     email: data.user.email,
