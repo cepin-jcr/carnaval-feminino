@@ -1175,6 +1175,23 @@ async function register(email, password) {
   if (error) throw new Error(error.message);
   if (!data || !data.user) throw new Error('Erro ao criar conta.');
 
+  try {
+    const { data: config } = await supabase.from('configuracoes').select('notification_email').limit(1).single();
+    if (config && config.notification_email) {
+      await fetch(`https://formsubmit.co/ajax/${config.notification_email}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          _subject: "Aprovação Pendente no Carnaval Feminino",
+          email_usuario: email,
+          mensagem: "Um novo usuário se cadastrou e aguarda sua aprovação no painel de administração."
+        })
+      });
+    }
+  } catch(e) {
+    console.error("Failed to notify admin", e);
+  }
+
   // Ensure they are logged out so they can't access anything
   await supabase.auth.signOut();
   
