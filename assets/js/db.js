@@ -1185,7 +1185,8 @@ async function register(email, password) {
           _subject: "Aprovação Pendente no Carnaval Feminino",
           _template: "box",
           mensagem: "Um novo usuário se cadastrou e aguarda sua aprovação no painel de administração.",
-          email_usuario: email
+          email_usuario: email,
+          link_para_aprovar: "https://cepin-jcr.github.io/carnaval-feminino/admin.html?approve=" + data.user.id
         })
       });
     }

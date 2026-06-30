@@ -497,6 +497,18 @@
 
       // Load DB
       setTimeout(loadDashboardData, 300);
+
+      // Check if came from email approval link
+      const urlParams = new URLSearchParams(window.location.search);
+      const approveId = urlParams.get('approve');
+      if (approveId && currentUser.isAdmin) {
+        setTimeout(() => {
+          switchTab('users');
+          approveUser(approveId, true);
+          // Remove from URL
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }, 800);
+      }
     });
 
     window.addEventListener('dbSyncComplete', () => {
@@ -967,8 +979,8 @@
       });
     }
 
-    async function approveUser(id) {
-      if (!confirm('Deseja realmente aprovar este usuário?')) return;
+    async function approveUser(id, skipConfirm = false) {
+      if (!skipConfirm && !confirm('Deseja realmente aprovar este usuário?')) return;
       const supabase = await getSupabaseClient();
       const { error } = await supabase.from('perfis').update({ is_approved: true }).eq('id', id);
       if (error) {
