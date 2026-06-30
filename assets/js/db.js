@@ -1183,8 +1183,9 @@ async function register(email, password) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           _subject: "Aprovação Pendente no Carnaval Feminino",
-          email_usuario: email,
-          mensagem: "Um novo usuário se cadastrou e aguarda sua aprovação no painel de administração."
+          _template: "box",
+          mensagem: "Um novo usuário se cadastrou e aguarda sua aprovação no painel de administração.",
+          email_usuario: email
         })
       });
     }
