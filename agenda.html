@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda de Eventos - Blocos Feministas</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind CSS Configuration -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            border: "hsl(var(--border))",
+            input: "hsl(var(--input))",
+            ring: "hsl(var(--ring))",
+            background: "hsl(var(--background))",
+            foreground: "hsl(var(--foreground))",
+            primary: {
+              DEFAULT: "hsl(var(--primary))",
+              foreground: "hsl(var(--primary-foreground))",
+              glow: "hsl(var(--primary-glow))",
+            },
+            secondary: {
+              DEFAULT: "hsl(var(--secondary))",
+              foreground: "hsl(var(--secondary-foreground))",
+            },
+            destructive: {
+              DEFAULT: "hsl(var(--destructive))",
+              foreground: "hsl(var(--destructive-foreground))",
+            },
+            success: {
+              DEFAULT: "hsl(var(--success))",
+              foreground: "hsl(var(--success-foreground))",
+            },
+            muted: {
+              DEFAULT: "hsl(var(--muted))",
+              foreground: "hsl(var(--muted-foreground))",
+            },
+            accent: {
+              DEFAULT: "hsl(var(--accent))",
+              foreground: "hsl(var(--accent-foreground))",
+            },
+            popover: {
+              DEFAULT: "hsl(var(--popover))",
+              foreground: "hsl(var(--popover-foreground))",
+            },
+            card: {
+              DEFAULT: "hsl(var(--card))",
+              foreground: "hsl(var(--card-foreground))",
+            },
+            carnival: {
+              purple: "hsl(var(--carnival-purple))",
+              pink: "hsl(var(--carnival-pink))",
+              gold: "hsl(var(--carnival-gold))",
+              orange: "hsl(var(--carnival-orange))",
+            }
+          },
+          boxShadow: {
+            'carnival': 'var(--shadow-carnival)',
+            'soft': 'var(--shadow-soft)',
+            'glow': 'var(--shadow-glow)',
+          },
+          borderRadius: {
+            lg: "var(--radius)",
+            md: "calc(var(--radius) - 2px)",
+            sm: "calc(var(--radius) - 4px)",
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Global Custom CSS -->
+  <link rel="stylesheet" href="assets/css/global.css">
+</head>
+<body class="min-h-screen bg-background text-foreground transition-all duration-300">
+
+  <!-- Header Dynamic Element -->
+  <div id="header-placeholder"></div>
+
+  <div class="container mx-auto px-4 py-8">
+    
+    <!-- Hero Section -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-extrabold gradient-text mb-4">
+        Agenda dos Blocos Feministas
+      </h1>
+      <p class="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto font-medium">
+        Descubra ensaios, oficinas, desfiles e shows dos blocos feministas pelo Brasil
+      </p>
+    </div>
+    
+    <!-- Filters Card -->
+    <div class="rounded-xl border border-border bg-card p-6 shadow-soft mb-8">
+      <h3 class="font-bold flex items-center gap-2 mb-4">
+        <span>⚙️</span> Filtros de Categoria
+      </h3>
+      <div id="category-filters" class="flex flex-wrap gap-2.5">
+        <button onclick="setFilter('todos')" class="filter-btn bg-primary text-white font-semibold py-1.5 px-4 rounded-lg text-sm transition-smooth" data-type="todos">Todos</button>
+        <button onclick="setFilter('Ensaio')" class="filter-btn border border-input hover:bg-muted text-foreground py-1.5 px-4 rounded-lg text-sm font-semibold transition-smooth" data-type="Ensaio">Ensaios</button>
+        <button onclick="setFilter('Oficina')" class="filter-btn border border-input hover:bg-muted text-foreground py-1.5 px-4 rounded-lg text-sm font-semibold transition-smooth" data-type="Oficina">Oficinas</button>
+        <button onclick="setFilter('Desfile')" class="filter-btn border border-input hover:bg-muted text-foreground py-1.5 px-4 rounded-lg text-sm font-semibold transition-smooth" data-type="Desfile">Desfiles</button>
+        <button onclick="setFilter('Show')" class="filter-btn border border-input hover:bg-muted text-foreground py-1.5 px-4 rounded-lg text-sm font-semibold transition-smooth" data-type="Show">Shows</button>
+      </div>
+    </div>
+    
+    <!-- Events Grid -->
+    <div id="events-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr items-stretch">
+      <!-- Dynamically Rendered Events -->
+    </div>
+    
+    <!-- No Events Template -->
+    <div id="no-events-found" class="hidden text-center py-16 rounded-xl border border-dashed border-border bg-card/30">
+      <div class="text-5xl mb-4">📅</div>
+      <h3 class="text-xl font-bold mb-2">Nenhum evento encontrado</h3>
+      <p class="text-muted-foreground max-w-sm mx-auto">
+        Não há eventos agendados para a categoria selecionada no momento.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- ================= DIALOG MODAL: PARTICIPATE ================= -->
+  <div id="participate-modal" class="fixed inset-0 z-50 hidden bg-black/60 flex items-center justify-center p-4 backdrop-blur-sm">
+    <div class="bg-card text-card-foreground border border-border rounded-xl max-w-md w-full p-6 shadow-carnival animate-scaleIn">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-bold">Inscrição no Evento</h3>
+        <button onclick="closeModal()" class="text-muted-foreground hover:text-foreground text-lg">✕</button>
+      </div>
+      <p class="text-sm text-muted-foreground mb-4">Preencha seus dados para solicitar participação no evento selecionado.</p>
+      
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold mb-1">Nome completo</label>
+          <input id="participant-name" type="text" placeholder="Seu nome" class="w-full px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1">E-mail de contato</label>
+          <input id="participant-email" type="email" placeholder="seu@email.com" class="w-full px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50" />
+        </div>
+        
+        <!-- Summary Info Box -->
+        <div class="bg-muted/50 p-4 rounded-lg text-xs space-y-2 border border-border/40">
+          <p><strong>📋 Evento:</strong> <span id="summary-event-title">-</span></p>
+          <p><strong>📅 Data:</strong> <span id="summary-event-date">-</span></p>
+          <p><strong>⏰ Horário:</strong> <span id="summary-event-time">-</span></p>
+          <p><strong>📍 Local:</strong> <span id="summary-event-location">-</span></p>
+        </div>
+        
+        <div class="flex gap-3 pt-2">
+          <button onclick="closeModal()" class="flex-1 border border-input hover:bg-muted py-2 rounded-lg text-sm transition-smooth font-medium">Cancelar</button>
+          <button onclick="confirmRegistration()" class="flex-1 bg-primary hover:bg-primary/95 text-white py-2 rounded-lg text-sm transition-smooth font-bold">Confirmar Inscrição</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Shared JS Library -->
+  <script src="assets/js/db.js"></script>
+
+  <!-- Page Logic -->
+  <script>
+    let activeFilter = 'todos';
+    let eventsData = [];
+    let blocksData = [];
+    let selectedEvent = null;
+
+    // Filter type selection
+    function setFilter(type) {
+      activeFilter = type;
+      
+      // Update buttons style
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        if (btn.getAttribute('data-type') === type) {
+          btn.className = "filter-btn bg-primary text-white font-semibold py-1.5 px-4 rounded-lg text-sm transition-smooth";
+        } else {
+          btn.className = "filter-btn border border-input hover:bg-muted text-foreground py-1.5 px-4 rounded-lg text-sm font-semibold transition-smooth";
+        }
+      });
+
+      renderEvents();
+    }
+
+    function openModal(eventObj) {
+      selectedEvent = eventObj;
+      document.getElementById('summary-event-title').innerText = eventObj.nome;
+      document.getElementById('summary-event-date').innerText = new Date(eventObj.data).toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      document.getElementById('summary-event-time').innerText = eventObj.horario || 'A combinar';
+      document.getElementById('summary-event-location').innerText = `${eventObj.local || ''}, ${eventObj.cidade || ''} - ${eventObj.estado || ''}`;
+      
+      document.getElementById('participate-modal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('participate-modal').classList.add('hidden');
+      document.getElementById('participant-name').value = '';
+      document.getElementById('participant-email').value = '';
+      selectedEvent = null;
+    }
+
+    // Colors mapping helper
+    function getEventTypeColor(tipo) {
+      const colors = {
+        'Ensaio': 'bg-primary/10 text-primary',
+        'Oficina': 'bg-carnival-purple/10 text-carnival-purple',
+        'Desfile': 'bg-carnival-gold/10 text-carnival-gold',
+        'Show': 'bg-carnival-pink/10 text-carnival-pink'
+      };
+      return colors[tipo] || 'bg-muted text-muted-foreground';
+    }
+
+    // Render Events list
+    function renderEvents() {
+      const grid = document.getElementById('events-grid');
+      const noEvents = document.getElementById('no-events-found');
+      grid.innerHTML = '';
+
+      const filtered = activeFilter === 'todos' 
+        ? eventsData 
+        : eventsData.filter(e => e.tipo === activeFilter);
+
+      if (filtered.length === 0) {
+        noEvents.classList.remove('hidden');
+        return;
+      }
+      noEvents.classList.add('hidden');
+
+      filtered.forEach(ev => {
+        const blockObj = blocksData.find(b => b.id === ev.blocoId);
+        const blockName = blockObj ? blockObj.nome : 'Bloco';
+        const card = document.createElement('div');
+        card.className = "group border border-border bg-gradient-card rounded-xl hover:shadow-carnival transition-smooth p-5 flex flex-col justify-between h-full";
+
+        // Date parser
+        const eventDateStr = new Date(ev.data).toLocaleDateString('pt-BR');
+
+        // Check if event has a photo
+        const imageSrc = ev.foto || (blockObj ? blockObj.foto : 'assets/images/placeholder.svg');
+
+        card.innerHTML = `
+          <div>
+            <!-- Header info -->
+            <div class="flex items-start justify-between mb-4">
+              <span class="inline-flex items-center rounded-full border border-transparent px-2.5 py-0.5 text-xs font-semibold ${getEventTypeColor(ev.tipo)}">
+                ${ev.tipo}
+              </span>
+              <div class="text-right text-xs text-muted-foreground space-y-1">
+                <div class="flex items-center gap-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  ${eventDateStr}
+                </div>
+                <div class="flex items-center gap-1 justify-end">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  ${ev.horario || 'Horário a combinar'}
+                </div>
+              </div>
+            </div>
+
+            <!-- Title & block -->
+            <h3 class="text-lg font-bold group-hover:gradient-text transition-smooth line-clamp-1">${ev.nome}</h3>
+            <a href="bloco.html?id=${ev.blocoId}" class="text-sm font-semibold text-primary hover:underline block mt-1">${blockName}</a>
+
+            <!-- Image preview -->
+            ${imageSrc ? `
+              <div class="w-full h-40 overflow-hidden rounded-lg mt-3 mb-3 border border-border/30 shadow-sm">
+                <img 
+                  src="${imageSrc}" 
+                  alt="${ev.nome}" 
+                  class="w-full h-full object-cover group-hover:scale-102 transition-smooth"
+                  onerror="this.src='assets/images/placeholder.svg'"
+                />
+              </div>
+            ` : ''}
+
+            <!-- Description -->
+            <p class="text-xs text-muted-foreground line-clamp-3 leading-relaxed mt-2">
+              ${ev.descricao || 'Sem descrição cadastrada para este evento.'}
+            </p>
+          </div>
+
+          <!-- Footer details -->
+          <div class="mt-5 pt-3 border-t border-border/40 flex items-center justify-between">
+            <div class="space-y-1 text-sm">
+              <div class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-primary"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span>${ev.local || 'Não definido'}</span>
+              </div>
+              <div class="text-muted-foreground pl-6 text-xs">${ev.cidade || ''}, ${ev.estado || ''}</div>
+            </div>
+            
+            <button 
+              onclick='openModal(${JSON.stringify(ev).replace(/'/g, "&apos;")})'
+              class="bg-gradient-primary text-white hover:shadow-glow transition-smooth border-0 font-semibold h-9 rounded-md px-3 inline-flex items-center justify-center text-xs shadow-sm cursor-pointer"
+            >
+              Participar
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Modal submit confirm registration
+    function confirmRegistration() {
+      const name = document.getElementById('participant-name').value.trim();
+      const email = document.getElementById('participant-email').value.trim();
+
+      if (!name || !email) {
+        showToast('Preencha o nome e o e-mail de contato! ⚠️');
+        return;
+      }
+
+      // Find associated block
+      const blockObj = blocksData.find(b => b.id === selectedEvent.blocoId);
+      if (!blockObj || !blockObj.contato) {
+        showToast('Informações de contato do bloco não disponíveis. ⚠️');
+        closeModal();
+        return;
+      }
+
+      // Extract emails and phones from block contact string
+      const contactStr = blockObj.contato;
+      const emails = [];
+      const phones = [];
+
+      contactStr.split('|').map(p => p.trim()).forEach(part => {
+        if (part.includes('@')) {
+          emails.push(part);
+        } else {
+          const digits = part.replace(/\D/g, '');
+          if (digits.length >= 10) {
+            // Append brazil prefix if length is 10/11
+            const normalized = (digits.length === 10 || digits.length === 11) ? `55${digits}` : digits;
+            phones.push(normalized);
+          }
+        }
+      });
+
+      const primaryEmail = emails[0] || null;
+      const primaryPhone = phones[0] || null;
+
+      if (primaryEmail) {
+        // Open email client
+        const subject = `Inscrição no Evento: ${selectedEvent.nome}`;
+        const body = `Olá!\n\nMeu nome é ${name} (e-mail: ${email}). Gostaria de confirmar minha participação no evento "${selectedEvent.nome}" agendado para o dia ${new Date(selectedEvent.data).toLocaleDateString('pt-BR')} às ${selectedEvent.horario || 'a combinar'}.\n\nAguardo confirmação.\nObrigado(a)!`;
+        
+        window.location.href = `mailto:${primaryEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        showToast('Inscrição preparada! Abrindo gerenciador de e-mail... 📧');
+      } else if (primaryPhone) {
+        // Open WhatsApp
+        const waText = `Olá! Meu nome é ${name}. Gostaria de participar do evento "${selectedEvent.nome}" no dia ${new Date(selectedEvent.data).toLocaleDateString('pt-BR')}.`;
+        window.open(`https://wa.me/${primaryPhone}?text=${encodeURIComponent(waText)}`, '_blank');
+        showToast('Inscrição preparada! Abrindo WhatsApp... 📱');
+      } else {
+        showToast('Nenhum canal direto de contato encontrado. Tente mandar uma mensagem manual para: ' + blockObj.contato);
+      }
+
+      closeModal();
+    }
+
+    // Run on load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        eventsData = getEvents();
+        blocksData = getBlocks();
+        renderEvents();
+      }, 300);
+    });
+
+    window.addEventListener('dbSyncComplete', () => {
+      eventsData = getEvents();
+      blocksData = getBlocks();
+      renderEvents();
+    });
+  </script>
+</body>
+</html>

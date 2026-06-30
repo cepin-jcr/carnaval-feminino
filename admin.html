@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Administrador - Blocos Feministas</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind CSS Configuration -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            border: "hsl(var(--border))",
+            input: "hsl(var(--input))",
+            ring: "hsl(var(--ring))",
+            background: "hsl(var(--background))",
+            foreground: "hsl(var(--foreground))",
+            primary: {
+              DEFAULT: "hsl(var(--primary))",
+              foreground: "hsl(var(--primary-foreground))",
+              glow: "hsl(var(--primary-glow))",
+            },
+            secondary: {
+              DEFAULT: "hsl(var(--secondary))",
+              foreground: "hsl(var(--secondary-foreground))",
+            },
+            destructive: {
+              DEFAULT: "hsl(var(--destructive))",
+              foreground: "hsl(var(--destructive-foreground))",
+            },
+            success: {
+              DEFAULT: "hsl(var(--success))",
+              foreground: "hsl(var(--success-foreground))",
+            },
+            muted: {
+              DEFAULT: "hsl(var(--muted))",
+              foreground: "hsl(var(--muted-foreground))",
+            },
+            accent: {
+              DEFAULT: "hsl(var(--accent))",
+              foreground: "hsl(var(--accent-foreground))",
+            },
+            popover: {
+              DEFAULT: "hsl(var(--popover))",
+              foreground: "hsl(var(--popover-foreground))",
+            },
+            card: {
+              DEFAULT: "hsl(var(--card))",
+              foreground: "hsl(var(--card-foreground))",
+            },
+            carnival: {
+              purple: "hsl(var(--carnival-purple))",
+              pink: "hsl(var(--carnival-pink))",
+              gold: "hsl(var(--carnival-gold))",
+              orange: "hsl(var(--carnival-orange))",
+            }
+          },
+          boxShadow: {
+            'carnival': 'var(--shadow-carnival)',
+            'soft': 'var(--shadow-soft)',
+            'glow': 'var(--shadow-glow)',
+          },
+          borderRadius: {
+            lg: "var(--radius)",
+            md: "calc(var(--radius) - 2px)",
+            sm: "calc(var(--radius) - 4px)",
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Global Custom CSS -->
+  <link rel="stylesheet" href="assets/css/global.css">
+</head>
+<body class="min-h-screen bg-background text-foreground transition-all duration-300">
+
+  <!-- Header Dynamic Element -->
+  <div id="header-placeholder"></div>
+
+  <!-- Main Container -->
+  <div class="container mx-auto px-4 py-8">
+    
+    <!-- Welcome Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/50 pb-6 mb-8">
+      <div>
+        <h1 class="text-3xl font-extrabold gradient-text tracking-tight">Painel de Controle</h1>
+        <p id="admin-welcome-email" class="text-sm text-muted-foreground mt-1 font-medium">Bem-vinda(o) de volta, administrador!</p>
+      </div>
+      <div class="flex gap-2">
+        <a 
+          href="admin-block-form.html"
+          class="bg-primary hover:bg-primary/95 text-white font-bold py-2 px-4 rounded-lg text-sm transition-all duration-300 shadow-sm"
+        >
+          ➕ Adicionar Bloco
+        </a>
+        <a 
+          href="admin-event-form.html"
+          class="bg-gradient-secondary text-white font-bold py-2 px-4 rounded-lg text-sm transition-all duration-300 shadow-sm hover:scale-[1.01]"
+        >
+          ➕ Adicionar Evento
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Stats Row -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      <!-- Blocks count stat -->
+      <div class="rounded-xl border border-border bg-gradient-card p-6 shadow-soft flex items-center justify-between">
+        <div>
+          <p class="text-xs font-bold text-muted-foreground uppercase tracking-wider">Meus Blocos Cadastrados</p>
+          <h3 id="stat-blocks-count" class="text-3xl font-extrabold mt-1">0</h3>
+        </div>
+        <div class="text-3xl p-3 bg-primary/10 rounded-xl">🌸</div>
+      </div>
+      
+      <!-- Events count stat -->
+      <div class="rounded-xl border border-border bg-gradient-card p-6 shadow-soft flex items-center justify-between">
+        <div>
+          <p class="text-xs font-bold text-muted-foreground uppercase tracking-wider">Eventos Marcados</p>
+          <h3 id="stat-events-count" class="text-3xl font-extrabold mt-1">0</h3>
+        </div>
+        <div class="text-3xl p-3 bg-secondary/10 rounded-xl">📅</div>
+      </div>
+
+      <!-- User Role stat -->
+      <div class="rounded-xl border border-border bg-gradient-card p-6 shadow-soft flex items-center justify-between">
+        <div>
+          <p class="text-xs font-bold text-muted-foreground uppercase tracking-wider">Tipo de Acesso</p>
+          <h3 id="stat-user-role" class="text-xl font-extrabold mt-1 text-primary">Administrador</h3>
+        </div>
+        <div class="text-3xl p-3 bg-amber-500/10 rounded-xl">🔑</div>
+      </div>
+    </div>
+
+    <!-- Tab Section Control -->
+    <div class="mb-8 border-b border-border">
+      <div class="flex gap-4">
+        <button 
+          id="tab-blocks-btn"
+          onclick="switchTab('blocks')"
+          class="pb-3 text-sm font-bold border-b-2 border-primary text-primary transition-smooth focus:outline-none"
+        >
+          🌸 Gerenciar Blocos
+        </button>
+        <button 
+          id="tab-events-btn"
+          onclick="switchTab('events')"
+          class="pb-3 text-sm font-bold border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-smooth focus:outline-none"
+        >
+          📅 Gerenciar Eventos
+        </button>
+        <button 
+          id="tab-cepin-btn"
+          onclick="switchTab('cepin')"
+          class="pb-3 text-sm font-bold border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-smooth focus:outline-none hidden"
+        >
+          ⚙️ Editar CEPIN
+        </button>
+      </div>
+    </div>
+
+    <!-- ================= TAB: BLOCKS ================= -->
+    <div id="tab-blocks" class="space-y-6">
+      <div class="rounded-xl border border-border bg-card shadow-soft overflow-hidden">
+        <div class="p-6 border-b border-border flex justify-between items-center">
+          <h3 class="font-extrabold text-lg">Seus Blocos Carnavalescos</h3>
+          <span id="blocks-table-count" class="text-xs font-semibold px-2 py-1 bg-muted rounded-full">0 blocos</span>
+        </div>
+        
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-border bg-muted/40 text-xs font-bold uppercase text-muted-foreground">
+                <th class="p-4 pl-6">Foto</th>
+                <th class="p-4">Nome do Bloco</th>
+                <th class="p-4">Cidade / Estado</th>
+                <th class="p-4">Contato</th>
+                <th class="p-4 pr-6 text-right">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="blocks-table-body" class="divide-y divide-border/60 text-sm">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="empty-blocks-state" class="hidden text-center py-12 p-6">
+          <p class="text-muted-foreground mb-4">Você ainda não tem nenhum bloco cadastrado sob esta conta.</p>
+          <a href="admin-block-form.html" class="inline-flex bg-primary hover:bg-primary/95 text-white font-bold py-2 px-5 rounded-lg text-xs shadow-sm">
+            Cadastrar meu primeiro Bloco
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TAB: EVENTS ================= -->
+    <div id="tab-events" class="space-y-6 hidden">
+      <div class="rounded-xl border border-border bg-card shadow-soft overflow-hidden">
+        <div class="p-6 border-b border-border flex justify-between items-center">
+          <h3 class="font-extrabold text-lg">Seus Eventos Cadastrados</h3>
+          <span id="events-table-count" class="text-xs font-semibold px-2 py-1 bg-muted rounded-full">0 eventos</span>
+        </div>
+        
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-border bg-muted/40 text-xs font-bold uppercase text-muted-foreground">
+                <th class="p-4 pl-6">Categoria</th>
+                <th class="p-4">Título do Evento</th>
+                <th class="p-4">Bloco Associado</th>
+                <th class="p-4">Data / Horário</th>
+                <th class="p-4">Local</th>
+                <th class="p-4 pr-6 text-right">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="events-table-body" class="divide-y divide-border/60 text-sm">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="empty-events-state" class="hidden text-center py-12 p-6">
+          <p class="text-muted-foreground mb-4">Você não possui nenhum evento agendado ainda.</p>
+          <a href="admin-event-form.html" class="inline-flex bg-gradient-secondary text-white font-bold py-2 px-5 rounded-lg text-xs shadow-sm hover:scale-[1.01]">
+            Criar meu primeiro Evento
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= TAB: CEPIN ================= -->
+    <div id="tab-cepin" class="space-y-6 hidden">
+      <div class="rounded-xl border border-border bg-card shadow-soft overflow-hidden">
+        <div class="p-6 border-b border-border">
+          <h3 class="font-extrabold text-lg">Editar Informações do CEPIN JCR</h3>
+          <p class="text-xs text-muted-foreground mt-1">Gerencie os textos, equipe, competências e links exibidos na página CEPIN e no rodapé.</p>
+        </div>
+        
+        <form id="cepin-form" onsubmit="handleCepinFormSubmit(event)" class="p-6 space-y-6">
+          <!-- Localização, Contato e Rodapé -->
+          <div class="space-y-4">
+            <h4 class="text-sm font-bold text-primary border-b border-border pb-1">📍 Rodapé & Contatos</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="cepin-endereco" class="block text-xs font-bold uppercase text-muted-foreground mb-1 text-[10px] tracking-wider font-bold">Endereço Completo</label>
+                <input id="cepin-endereco" type="text" required class="w-full px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth" />
+              </div>
+              <div>
+                <label for="cepin-email" class="block text-xs font-bold uppercase text-muted-foreground mb-1 text-[10px] tracking-wider font-bold">E-mail de Contato</label>
+                <input id="cepin-email" type="email" required class="w-full px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Redes Sociais -->
+          <div class="space-y-4">
+            <h4 class="text-sm font-bold text-primary border-b border-border pb-1">📱 Redes Sociais</h4>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label for="cepin-instagram" class="block text-xs font-bold uppercase text-muted-foreground mb-1 text-[10px] tracking-wider font-bold">Instagram Handle</label>
+                <input id="cepin-instagram" type="text" placeholder="@cepinjcr" class="w-full px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth" />
+              </div>
+              <div>
+                <label for="cepin-facebook" class="block text-xs font-bold uppercase text-muted-foreground mb-1 text-[10px] tracking-wider font-bold">Nome Facebook</label>
+                <input id="cepin-facebook" type="text" placeholder="Cepin Jcr" class="w-full px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth" />
+              </div>
+              <div>
+                <label for="cepin-youtube" class="block text-xs font-bold uppercase text-muted-foreground mb-1 text-[10px] tracking-wider font-bold">Nome Canal YouTube</label>
+                <input id="cepin-youtube" type="text" placeholder="CEPIN JCR" class="w-full px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Apresentação -->
+          <div class="space-y-4">
+            <h4 class="text-sm font-bold text-primary border-b border-border pb-1">💡 Apresentação</h4>
+            <div class="grid grid-cols-1 gap-4">
+              <div>
+                <label for="cepin-apresentacao-titulo" class="block text-xs font-bold uppercase text-muted-foreground mb-1 text-[10px] tracking-wider font-bold">Título Principal</label>
+                <input id="cepin-apresentacao-titulo" type="text" required class="w-full px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth" />
+              </div>
+              <div>
+                <label for="cepin-apresentacao-subtitulo" class="block text-xs font-bold uppercase text-muted-foreground mb-1 text-[10px] tracking-wider font-bold">Subtítulo</label>
+                <input id="cepin-apresentacao-subtitulo" type="text" required class="w-full px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth" />
+              </div>
+              <div>
+                <label for="cepin-apresentacao-texto" class="block text-xs font-bold uppercase text-muted-foreground mb-1 text-[10px] tracking-wider font-bold">Texto de Apresentação (Use quebras de linha duplas para separar parágrafos)</label>
+                <textarea id="cepin-apresentacao-texto" rows="10" required class="w-full px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Competências -->
+          <div class="space-y-4">
+            <h4 class="text-sm font-bold text-primary border-b border-border pb-1">📋 Competências (Uma por linha)</h4>
+            <div>
+              <label for="cepin-competencias" class="block text-xs font-bold uppercase text-muted-foreground mb-1 text-[10px] tracking-wider font-bold">Competências do Centro</label>
+              <textarea id="cepin-competencias" rows="8" placeholder="Digite uma competência por linha..." class="w-full px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth"></textarea>
+            </div>
+          </div>
+
+          <!-- Potenciais Parceiros -->
+          <div class="space-y-4">
+            <h4 class="text-sm font-bold text-primary border-b border-border pb-1">🤝 Potenciais Parceiros</h4>
+            <div>
+              <label for="cepin-parceiros-texto" class="block text-xs font-bold uppercase text-muted-foreground mb-1 text-[10px] tracking-wider font-bold">Descrição</label>
+              <textarea id="cepin-parceiros-texto" rows="3" required class="w-full px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth"></textarea>
+            </div>
+          </div>
+
+          <!-- Projetos -->
+          <div class="space-y-4">
+            <div class="flex justify-between items-center border-b border-border pb-1">
+              <h4 class="text-sm font-bold text-primary">🚀 Projetos</h4>
+              <button type="button" onclick="addProjectRow()" class="text-xs bg-primary/10 text-primary font-bold py-1 px-3.5 rounded-lg border border-primary/20 hover:bg-primary/20 transition-smooth">+ Adicionar Projeto</button>
+            </div>
+            <div id="cepin-projetos-container" class="space-y-4">
+              <!-- Dynamically populated rows of projects -->
+            </div>
+          </div>
+
+          <!-- Equipe -->
+          <div class="space-y-4">
+            <div class="flex justify-between items-center border-b border-border pb-1">
+              <h4 class="text-sm font-bold text-primary">👥 Equipe de Pesquisadores</h4>
+              <button type="button" onclick="addMemberRow()" class="text-xs bg-primary/10 text-primary font-bold py-1 px-3.5 rounded-lg border border-primary/20 hover:bg-primary/20 transition-smooth">+ Adicionar Membro</button>
+            </div>
+            <div>
+              <label for="cepin-equipe-texto" class="block text-xs font-bold uppercase text-muted-foreground mb-1 text-[10px] tracking-wider font-bold">Apresentação da Equipe</label>
+              <textarea id="cepin-equipe-texto" rows="3" required class="w-full px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth"></textarea>
+            </div>
+            <div class="overflow-x-auto rounded-xl border border-border/50">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-muted/40 border-b border-border/60 text-xs font-bold uppercase text-muted-foreground">
+                    <th class="p-3 pl-4">Nome</th>
+                    <th class="p-3">Câmpus</th>
+                    <th class="p-3">Cargo / Representação</th>
+                    <th class="p-3">E-mail / Contato</th>
+                    <th class="p-3 pr-4 text-right">Ação</th>
+                  </tr>
+                </thead>
+                <tbody id="cepin-equipe-tbody" class="divide-y divide-border/40 text-sm">
+                  <!-- Dynamically populated rows of members -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Colaboradores -->
+          <div class="space-y-4">
+            <div class="flex justify-between items-center border-b border-border pb-1">
+              <h4 class="text-sm font-bold text-primary">🤝 Colaboradores</h4>
+              <button type="button" onclick="addCollaboratorRow()" class="text-xs bg-primary/10 text-primary font-bold py-1 px-3.5 rounded-lg border border-primary/20 hover:bg-primary/20 transition-smooth">+ Adicionar Colaborador</button>
+            </div>
+            <div class="overflow-x-auto rounded-xl border border-border/50">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-muted/40 border-b border-border/60 text-xs font-bold uppercase text-muted-foreground">
+                    <th class="p-3 pl-4">Nome</th>
+                    <th class="p-3">Função no Projeto</th>
+                    <th class="p-3">E-mail / Contato</th>
+                    <th class="p-3 pr-4 text-right">Ação</th>
+                  </tr>
+                </thead>
+                <tbody id="cepin-colaboradores-tbody" class="divide-y divide-border/40 text-sm">
+                  <!-- Dynamically populated rows of collaborators -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Desenvolvedores -->
+          <div class="space-y-4">
+            <div class="flex justify-between items-center border-b border-border pb-1">
+              <h4 class="text-sm font-bold text-primary">💻 Desenvolvedores</h4>
+              <button type="button" onclick="addDeveloperRow()" class="text-xs bg-primary/10 text-primary font-bold py-1 px-3.5 rounded-lg border border-primary/20 hover:bg-primary/20 transition-smooth">+ Adicionar Desenvolvedor</button>
+            </div>
+            <div class="overflow-x-auto rounded-xl border border-border/50">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-muted/40 border-b border-border/60 text-xs font-bold uppercase text-muted-foreground">
+                    <th class="p-3 pl-4">Nome</th>
+                    <th class="p-3">Função no Projeto</th>
+                    <th class="p-3">E-mail / Contato</th>
+                    <th class="p-3 pr-4 text-right">Ação</th>
+                  </tr>
+                </thead>
+                <tbody id="cepin-desenvolvedores-tbody" class="divide-y divide-border/40 text-sm">
+                  <!-- Dynamically populated rows of developers -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Form Submit Button -->
+          <div class="flex justify-end pt-4 border-t border-border/50">
+            <button type="submit" class="bg-primary hover:bg-primary/95 hover:shadow-glow text-white font-extrabold py-3 px-8 rounded-lg text-sm transition-all duration-300 shadow-sm">
+              💾 Salvar Alterações do CEPIN
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Shared JS Library -->
+  <script src="assets/js/db.js"></script>
+
+  <!-- Dashboard Controller -->
+  <script>
+    let blocks = [];
+    let events = [];
+    let currentUser = null;
+
+    // Check auth guards on load
+    window.addEventListener('load', () => {
+      currentUser = getCurrentUser();
+      if (!currentUser) {
+        showToast('Acesso restrito. Faça login primeiro! ⚠️');
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 800);
+        return;
+      }
+
+      updateAdminUI();
+
+      // Load DB
+      setTimeout(loadDashboardData, 300);
+    });
+
+    window.addEventListener('dbSyncComplete', () => {
+      loadDashboardData();
+    });
+
+    window.addEventListener('userSessionUpdated', () => {
+      currentUser = getCurrentUser();
+      updateAdminUI();
+      loadDashboardData();
+    });
+
+    function updateAdminUI() {
+      if (!currentUser) return;
+      document.getElementById('admin-welcome-email').innerText = `Bem-vinda(o) de volta, ${currentUser.email}!`;
+      if (currentUser.isAdmin) {
+        document.getElementById('stat-user-role').innerText = 'Super Admin';
+        document.getElementById('tab-cepin-btn')?.classList.remove('hidden');
+      } else {
+        document.getElementById('stat-user-role').innerText = 'Usuário';
+        document.getElementById('tab-cepin-btn')?.classList.add('hidden');
+      }
+    }
+
+    // Load admin scope data
+    function loadDashboardData() {
+      currentUser = getCurrentUser();
+      if (!currentUser) return;
+
+      const allBlocks = getBlocks();
+      const allEvents = getEvents();
+
+      if (currentUser.isAdmin) {
+        // site admin sees all blocks
+        blocks = allBlocks;
+      } else {
+        // regular user only sees blocks they created
+        blocks = allBlocks.filter(b => b.ownerId === currentUser.id);
+      }
+
+      // Filter events belonging to these blocks
+      const blockIds = blocks.map(b => b.id);
+      events = allEvents.filter(e => blockIds.includes(e.blocoId));
+
+      // Update stats
+      document.getElementById('stat-blocks-count').innerText = blocks.length;
+      document.getElementById('stat-events-count').innerText = events.length;
+      
+      document.getElementById('blocks-table-count').innerText = `${blocks.length} bloco${blocks.length !== 1 ? 's' : ''}`;
+      document.getElementById('events-table-count').innerText = `${events.length} evento${events.length !== 1 ? 's' : ''}`;
+
+      renderBlocksTable();
+      renderEventsTable();
+    }
+
+    // Tabs navigation switcher
+    function switchTab(tab) {
+      const blocksTab = document.getElementById('tab-blocks');
+      const eventsTab = document.getElementById('tab-events');
+      const cepinTab = document.getElementById('tab-cepin');
+      
+      const blocksBtn = document.getElementById('tab-blocks-btn');
+      const eventsBtn = document.getElementById('tab-events-btn');
+      const cepinBtn = document.getElementById('tab-cepin-btn');
+
+      blocksTab.classList.add('hidden');
+      eventsTab.classList.add('hidden');
+      if (cepinTab) cepinTab.classList.add('hidden');
+      
+      blocksBtn.className = "pb-3 text-sm font-bold border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-smooth focus:outline-none";
+      eventsBtn.className = "pb-3 text-sm font-bold border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-smooth focus:outline-none";
+      if (cepinBtn) cepinBtn.className = "pb-3 text-sm font-bold border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-smooth focus:outline-none";
+
+      if (tab === 'blocks') {
+        blocksTab.classList.remove('hidden');
+        blocksBtn.className = "pb-3 text-sm font-bold border-b-2 border-primary text-primary transition-smooth focus:outline-none";
+      } else if (tab === 'events') {
+        eventsTab.classList.remove('hidden');
+        eventsBtn.className = "pb-3 text-sm font-bold border-b-2 border-primary text-primary transition-smooth focus:outline-none";
+      } else if (tab === 'cepin') {
+        if (cepinTab) cepinTab.classList.remove('hidden');
+        if (cepinBtn) cepinBtn.className = "pb-3 text-sm font-bold border-b-2 border-primary text-primary transition-smooth focus:outline-none";
+        loadCepinFormValues();
+      }
+    }
+
+    // Dynamic field creators for CEPIN editor
+    function addProjectRow(project = { titulo: '', descricao: '', link: '' }) {
+      const container = document.getElementById('cepin-projetos-container');
+      const projectDiv = document.createElement('div');
+      projectDiv.className = 'project-row p-4 border border-border rounded-xl bg-muted/20 relative space-y-3';
+      projectDiv.innerHTML = `
+        <button type="button" onclick="this.parentElement.remove()" class="absolute top-2 right-2 text-muted-foreground hover:text-red-500 text-sm font-bold" title="Remover projeto">✕</button>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[9px] font-bold uppercase text-muted-foreground mb-1">Título do Projeto</label>
+            <input type="text" value="${project.titulo}" placeholder="Ex: EnCEPIN 2022" class="project-titulo w-full px-2.5 py-1.5 border border-input rounded-md bg-background text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary" required />
+          </div>
+          <div>
+            <label class="block text-[9px] font-bold uppercase text-muted-foreground mb-1">Link do Projeto</label>
+            <input type="url" value="${project.link}" placeholder="https://..." class="project-link w-full px-2.5 py-1.5 border border-input rounded-md bg-background text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary" required />
+          </div>
+        </div>
+        <div>
+          <label class="block text-[9px] font-bold uppercase text-muted-foreground mb-1">Descrição</label>
+          <textarea rows="2" placeholder="Descreva brevemente o projeto..." class="project-descricao w-full px-2.5 py-1.5 border border-input rounded-md bg-background text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary" required>${project.descricao}</textarea>
+        </div>
+      `;
+      container.appendChild(projectDiv);
+    }
+
+    function addMemberRow(member = { nome: '', campus: '', cargo: '', contato: '' }) {
+      const tbody = document.getElementById('cepin-equipe-tbody');
+      const tr = document.createElement('tr');
+      tr.className = 'member-row hover:bg-muted/5';
+      tr.innerHTML = `
+        <td class="p-2 pl-4">
+          <input type="text" value="${member.nome}" placeholder="Nome" class="member-nome w-full px-2 py-1 border border-input rounded bg-background text-sm text-foreground" required />
+        </td>
+        <td class="p-2">
+          <input type="text" value="${member.campus}" placeholder="IFSP Jacareí" class="member-campus w-full px-2 py-1 border border-input rounded bg-background text-sm text-foreground" required />
+        </td>
+        <td class="p-2">
+          <input type="text" value="${member.cargo}" placeholder="Professor" class="member-cargo w-full px-2 py-1 border border-input rounded bg-background text-sm text-foreground" required />
+        </td>
+        <td class="p-2">
+          <input type="text" value="${member.contato}" placeholder="email@ifsp.edu.br" class="member-contato w-full px-2 py-1 border border-input rounded bg-background text-sm text-foreground" required />
+        </td>
+        <td class="p-2 pr-4 text-right">
+          <button type="button" onclick="this.parentElement.parentElement.remove()" class="bg-destructive/10 text-destructive hover:bg-destructive/20 px-2 py-1 rounded text-xs font-bold transition-smooth">Excluir</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    function addCollaboratorRow(member = { nome: '', funcao: '', contato: '' }) {
+      const tbody = document.getElementById('cepin-colaboradores-tbody');
+      const tr = document.createElement('tr');
+      tr.className = 'colab-row hover:bg-muted/5';
+      tr.innerHTML = `
+        <td class="p-2 pl-4">
+          <input type="text" value="${member.nome}" placeholder="Nome" class="colab-nome w-full px-2 py-1 border border-input rounded bg-background text-sm text-foreground" required />
+        </td>
+        <td class="p-2">
+          <input type="text" value="${member.funcao}" placeholder="Função / Cargo" class="colab-funcao w-full px-2 py-1 border border-input rounded bg-background text-sm text-foreground" required />
+        </td>
+        <td class="p-2">
+          <input type="text" value="${member.contato}" placeholder="email@example.com" class="colab-contato w-full px-2 py-1 border border-input rounded bg-background text-sm text-foreground" required />
+        </td>
+        <td class="p-2 pr-4 text-right">
+          <button type="button" onclick="this.parentElement.parentElement.remove()" class="bg-destructive/10 text-destructive hover:bg-destructive/20 px-2 py-1 rounded text-xs font-bold transition-smooth">Excluir</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    function addDeveloperRow(member = { nome: '', funcao: '', contato: '' }) {
+      const tbody = document.getElementById('cepin-desenvolvedores-tbody');
+      const tr = document.createElement('tr');
+      tr.className = 'dev-row hover:bg-muted/5';
+      tr.innerHTML = `
+        <td class="p-2 pl-4">
+          <input type="text" value="${member.nome}" placeholder="Nome" class="dev-nome w-full px-2 py-1 border border-input rounded bg-background text-sm text-foreground" required />
+        </td>
+        <td class="p-2">
+          <input type="text" value="${member.funcao}" placeholder="Desenvolvedor Frontend" class="dev-funcao w-full px-2 py-1 border border-input rounded bg-background text-sm text-foreground" required />
+        </td>
+        <td class="p-2">
+          <input type="text" value="${member.contato}" placeholder="email@example.com" class="dev-contato w-full px-2 py-1 border border-input rounded bg-background text-sm text-foreground" required />
+        </td>
+        <td class="p-2 pr-4 text-right">
+          <button type="button" onclick="this.parentElement.parentElement.remove()" class="bg-destructive/10 text-destructive hover:bg-destructive/20 px-2 py-1 rounded text-xs font-bold transition-smooth">Excluir</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    function loadCepinFormValues() {
+      const data = getCepinData();
+      
+      document.getElementById('cepin-endereco').value = data.endereco || '';
+      document.getElementById('cepin-email').value = data.email || '';
+      document.getElementById('cepin-instagram').value = data.instagram || '';
+      document.getElementById('cepin-facebook').value = data.facebook || '';
+      document.getElementById('cepin-youtube').value = data.youtube || '';
+      
+      document.getElementById('cepin-apresentacao-titulo').value = data.apresentacaoTitulo || '';
+      document.getElementById('cepin-apresentacao-subtitulo').value = data.apresentacaoSubtitulo || '';
+      document.getElementById('cepin-apresentacao-texto').value = data.apresentacaoTexto || [data.apresentacaoTexto1, data.apresentacaoTexto2, data.apresentacaoTexto3].filter(Boolean).join('\n\n');
+      
+      document.getElementById('cepin-competencias').value = (data.competencias || []).join('\n');
+      document.getElementById('cepin-parceiros-texto').value = data.parceirosTexto || '';
+      document.getElementById('cepin-equipe-texto').value = data.equipeTexto || '';
+      
+      // Projects
+      const projectsContainer = document.getElementById('cepin-projetos-container');
+      projectsContainer.innerHTML = '';
+      if (data.projetos && Array.isArray(data.projetos)) {
+        data.projetos.forEach(proj => addProjectRow(proj));
+      }
+      
+      // Members (Researchers)
+      const membersTbody = document.getElementById('cepin-equipe-tbody');
+      membersTbody.innerHTML = '';
+      if (data.equipeMembros && Array.isArray(data.equipeMembros)) {
+        data.equipeMembros.forEach(memb => addMemberRow(memb));
+      }
+
+      // Collaborators
+      const colabTbody = document.getElementById('cepin-colaboradores-tbody');
+      colabTbody.innerHTML = '';
+      if (data.equipeColaboradores && Array.isArray(data.equipeColaboradores)) {
+        data.equipeColaboradores.forEach(memb => addCollaboratorRow(memb));
+      }
+
+      // Developers
+      const devTbody = document.getElementById('cepin-desenvolvedores-tbody');
+      devTbody.innerHTML = '';
+      if (data.equipeDesenvolvedores && Array.isArray(data.equipeDesenvolvedores)) {
+        data.equipeDesenvolvedores.forEach(memb => addDeveloperRow(memb));
+      }
+    }
+
+    async function handleCepinFormSubmit(event) {
+      event.preventDefault();
+      
+      const competenciasText = document.getElementById('cepin-competencias').value;
+      const competencias = competenciasText.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+      
+      // Read projects
+      const projectRows = document.querySelectorAll('.project-row');
+      const projetos = [];
+      projectRows.forEach(row => {
+        projetos.push({
+          titulo: row.querySelector('.project-titulo').value,
+          link: row.querySelector('.project-link').value,
+          descricao: row.querySelector('.project-descricao').value
+        });
+      });
+      
+      // Read members (Researchers)
+      const memberRows = document.querySelectorAll('.member-row');
+      const equipeMembros = [];
+      memberRows.forEach(row => {
+        equipeMembros.push({
+          nome: row.querySelector('.member-nome').value,
+          campus: row.querySelector('.member-campus').value,
+          cargo: row.querySelector('.member-cargo').value,
+          contato: row.querySelector('.member-contato').value
+        });
+      });
+
+      // Read collaborators
+      const colabRows = document.querySelectorAll('.colab-row');
+      const equipeColaboradores = [];
+      colabRows.forEach(row => {
+        equipeColaboradores.push({
+          nome: row.querySelector('.colab-nome').value,
+          funcao: row.querySelector('.colab-funcao').value,
+          contato: row.querySelector('.colab-contato').value
+        });
+      });
+
+      // Read developers
+      const devRows = document.querySelectorAll('.dev-row');
+      const equipeDesenvolvedores = [];
+      devRows.forEach(row => {
+        equipeDesenvolvedores.push({
+          nome: row.querySelector('.dev-nome').value,
+          funcao: row.querySelector('.dev-funcao').value,
+          contato: row.querySelector('.dev-contato').value
+        });
+      });
+      
+      const updatedData = {
+        endereco: document.getElementById('cepin-endereco').value,
+        email: document.getElementById('cepin-email').value,
+        instagram: document.getElementById('cepin-instagram').value,
+        facebook: document.getElementById('cepin-facebook').value,
+        youtube: document.getElementById('cepin-youtube').value,
+        
+        apresentacaoTitulo: document.getElementById('cepin-apresentacao-titulo').value,
+        apresentacaoSubtitulo: document.getElementById('cepin-apresentacao-subtitulo').value,
+        apresentacaoTexto: document.getElementById('cepin-apresentacao-texto').value,
+        
+        competencias: competencias,
+        parceirosTexto: document.getElementById('cepin-parceiros-texto').value,
+        equipeTexto: document.getElementById('cepin-equipe-texto').value,
+        projetos: projetos,
+        equipeMembros: equipeMembros,
+        equipeColaboradores: equipeColaboradores,
+        equipeDesenvolvedores: equipeDesenvolvedores
+      };
+      
+      await saveCepinData(updatedData);
+      showToast('Informações do CEPIN salvas com sucesso! 🎉');
+      
+      // Dispatch sync event locally so other components reload
+      window.dispatchEvent(new CustomEvent('cepinSyncComplete'));
+      
+      loadCepinFormValues();
+    }
+
+    // Render Blocks Table
+    function renderBlocksTable() {
+      const tbody = document.getElementById('blocks-table-body');
+      const emptyState = document.getElementById('empty-blocks-state');
+      
+      tbody.innerHTML = '';
+      
+      if (blocks.length === 0) {
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      emptyState.classList.add('hidden');
+
+      blocks.forEach(block => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-muted/10 transition-smooth";
+        
+        const fotoUrl = block.foto || 'assets/images/placeholder.svg';
+
+        tr.innerHTML = `
+          <td class="p-4 pl-6">
+            <img src="${fotoUrl}" alt="Foto" class="w-10 h-10 object-cover rounded-lg border border-border" onerror="this.src='assets/images/placeholder.svg'" />
+          </td>
+          <td class="p-4 font-bold text-foreground">
+            <a href="bloco.html?id=${block.id}" target="_blank" class="hover:text-primary hover:underline">${block.nome}</a>
+          </td>
+          <td class="p-4 text-muted-foreground">
+            ${block.cidade || 'Não informada'} / ${block.estado || ''}
+          </td>
+          <td class="p-4 text-xs font-mono text-muted-foreground truncate max-w-[150px]">
+            ${block.contato || '-'}
+          </td>
+          <td class="p-4 pr-6 text-right space-x-1 whitespace-nowrap">
+            <a href="admin-block-form.html?id=${block.id}" class="inline-flex bg-muted hover:bg-muted/80 text-foreground font-semibold py-1 px-3 rounded text-xs transition-smooth" title="Editar">
+              Editar
+            </a>
+            <button onclick="handleDeleteBlock('${block.id}')" class="inline-flex bg-destructive/10 hover:bg-destructive/20 text-destructive font-semibold py-1 px-3 rounded text-xs transition-smooth" title="Excluir">
+              Excluir
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Render Events Table
+    function renderEventsTable() {
+      const tbody = document.getElementById('events-table-body');
+      const emptyState = document.getElementById('empty-events-state');
+      
+      tbody.innerHTML = '';
+      
+      if (events.length === 0) {
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      emptyState.classList.add('hidden');
+
+      events.forEach(ev => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-muted/10 transition-smooth";
+        
+        const blockName = blocks.find(b => b.id === ev.blocoId)?.nome || 'Bloco';
+        const dateStr = new Date(ev.data).toLocaleDateString('pt-BR');
+
+        // Colors logic
+        const colors = {
+          'Ensaio': 'bg-pink-500/10 text-pink-600 border-pink-500/20',
+          'Oficina': 'bg-purple-500/10 text-purple-600 border-purple-500/20',
+          'Desfile': 'bg-amber-500/10 text-amber-600 border-amber-500/20',
+          'Show': 'bg-rose-500/10 text-rose-600 border-rose-500/20'
+        };
+        const badgeColor = colors[ev.tipo] || 'bg-muted text-muted-foreground border-border/50';
+
+        tr.innerHTML = `
+          <td class="p-4 pl-6">
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded border uppercase tracking-wider ${badgeColor}">${ev.tipo}</span>
+          </td>
+          <td class="p-4 font-bold text-foreground">
+            ${ev.nome}
+          </td>
+          <td class="p-4 text-primary font-medium">
+            <a href="bloco.html?id=${ev.blocoId}" target="_blank" class="hover:underline">${blockName}</a>
+          </td>
+          <td class="p-4 text-xs text-muted-foreground">
+            📅 ${dateStr}<br>🕒 ${ev.horario || 'a combinar'}
+          </td>
+          <td class="p-4 text-muted-foreground text-xs truncate max-w-[120px]">
+            ${ev.local || 'Não definido'}
+          </td>
+          <td class="p-4 pr-6 text-right space-x-1 whitespace-nowrap">
+            <a href="admin-event-form.html?id=${ev.id}" class="inline-flex bg-muted hover:bg-muted/80 text-foreground font-semibold py-1 px-3 rounded text-xs transition-smooth" title="Editar">
+              Editar
+            </a>
+            <button onclick="handleDeleteEvent('${ev.id}')" class="inline-flex bg-destructive/10 hover:bg-destructive/20 text-destructive font-semibold py-1 px-3 rounded text-xs transition-smooth" title="Excluir">
+              Excluir
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Delete actions
+    async function handleDeleteBlock(id) {
+      const blockName = blocks.find(b => b.id === id)?.nome || 'este bloco';
+      if (confirm(`Tem certeza de que deseja excluir "${blockName}"? Esta ação excluirá também todos os eventos associados a ele.`)) {
+        await deleteBlock(id);
+        showToast('Bloco excluído com sucesso! 🗑️');
+        loadDashboardData();
+      }
+    }
+
+    async function handleDeleteEvent(id) {
+      if (confirm(`Tem certeza de que deseja excluir este evento?`)) {
+        await deleteEvent(id);
+        showToast('Evento excluído com sucesso! 🗑️');
+        loadDashboardData();
+      }
+    }
+  </script>
+</body>
+</html>

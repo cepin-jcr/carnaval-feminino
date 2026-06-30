@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quem Somos - CEPIN JCR</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Tailwind CSS Configuration -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            border: "hsl(var(--border))",
+            input: "hsl(var(--input))",
+            ring: "hsl(var(--ring))",
+            background: "hsl(var(--background))",
+            foreground: "hsl(var(--foreground))",
+            primary: {
+              DEFAULT: "hsl(var(--primary))",
+              foreground: "hsl(var(--primary-foreground))",
+              glow: "hsl(var(--primary-glow))",
+            },
+            secondary: {
+              DEFAULT: "hsl(var(--secondary))",
+              foreground: "hsl(var(--secondary-foreground))",
+            },
+            muted: {
+              DEFAULT: "hsl(var(--muted))",
+              foreground: "hsl(var(--muted-foreground))",
+            },
+            accent: {
+              DEFAULT: "hsl(var(--accent))",
+              foreground: "hsl(var(--accent-foreground))",
+            },
+            card: {
+              DEFAULT: "hsl(var(--card))",
+              foreground: "hsl(var(--card-foreground))",
+            },
+            carnival: {
+              purple: "hsl(var(--carnival-purple))",
+              pink: "hsl(var(--carnival-pink))",
+              gold: "hsl(var(--carnival-gold))",
+              orange: "hsl(var(--carnival-orange))",
+            }
+          },
+          boxShadow: {
+            'carnival': 'var(--shadow-carnival)',
+            'soft': 'var(--shadow-soft)',
+            'glow': 'var(--shadow-glow)',
+          },
+          borderRadius: {
+            lg: "var(--radius)",
+            md: "calc(var(--radius) - 2px)",
+            sm: "calc(var(--radius) - 4px)",
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Global Custom CSS -->
+  <link rel="stylesheet" href="assets/css/global.css">
+</head>
+<body class="min-h-screen bg-background text-foreground transition-all duration-300">
+
+  <!-- Header Dynamic Element -->
+  <div id="header-placeholder"></div>
+
+  <!-- Hero Banner -->
+  <section class="relative py-16 md:py-24 bg-gradient-to-br from-carnival-pink/10 via-carnival-purple/5 to-carnival-gold/5 overflow-hidden border-b border-border/40">
+    <!-- Visual abstract blobs for the 'fofo' aesthetic -->
+    <div class="absolute top-0 right-0 w-72 h-72 bg-carnival-pink/10 rounded-full blur-3xl -z-10 animate-float"></div>
+    <div class="absolute bottom-0 left-0 w-80 h-80 bg-carnival-purple/10 rounded-full blur-3xl -z-10" style="animation: float 4s ease-in-out infinite;"></div>
+    
+    <div class="container mx-auto px-4 text-center max-w-4xl">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider mb-6">
+        <span>✨ Conheça o CEPIN JCR</span>
+      </div>
+      <h1 id="page-title" class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-foreground">
+        Apresentação do <span class="gradient-text">CEPIN JCR</span>
+      </h1>
+      <p id="page-subtitle" class="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto font-medium">
+        Centro de Pesquisa e Inovação em Consumo, Mercados e Negócios do câmpus de Jacareí
+      </p>
+    </div>
+  </section>
+
+  <!-- Main Content Area -->
+  <div class="container mx-auto px-4 py-12 max-w-5xl space-y-16">
+    
+    <!-- Section: Apresentação -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+      <div class="md:col-span-2 space-y-6">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-xl shadow-sm">💡</div>
+          <h2 class="text-2xl font-extrabold tracking-tight">O que é o CEPIN?</h2>
+        </div>
+        <div id="apresentacao-textos" class="space-y-4 text-muted-foreground leading-relaxed text-base font-medium">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+      <div class="bg-gradient-card border border-border/60 rounded-2xl p-6 shadow-soft space-y-4">
+        <div class="text-3xl">🎯</div>
+        <h3 class="font-extrabold text-lg tracking-tight">Finalidade</h3>
+        <p class="text-sm text-muted-foreground leading-relaxed font-medium">
+          Desenvolver investigação fundamental ou aplicada, realizar transferência de tecnologia e oferecer atividades de extensão voltadas para o público em geral.
+        </p>
+        <div class="pt-4 border-t border-border/40 space-y-2">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-primary">Linhas de Pesquisa</h4>
+          <ul class="text-xs space-y-1.5 text-muted-foreground font-semibold">
+            <li class="flex items-center gap-1.5 font-medium">🌸 Comportamento do Consumidor e Consumo</li>
+            <li class="flex items-center gap-1.5 font-medium">🏢 Mercados, Sociedade e Organizações</li>
+            <li class="flex items-center gap-1.5 font-medium">📱 Marketing Digital e Inovação</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Competências -->
+    <section class="space-y-8">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-secondary/20 rounded-xl flex items-center justify-center text-xl shadow-sm">📋</div>
+        <h2 class="text-2xl font-extrabold tracking-tight">Nossas Competências</h2>
+      </div>
+      
+      <div id="competencias-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Competencias populated dynamically -->
+      </div>
+    </section>
+
+    <!-- Section: Potenciais Parceiros -->
+    <section class="relative overflow-hidden bg-gradient-to-r from-carnival-pink/5 to-carnival-purple/5 border border-border/40 rounded-2xl p-8 shadow-soft">
+      <div class="absolute top-0 right-0 p-8 text-5xl opacity-10">🤝</div>
+      <div class="max-w-3xl space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-accent/25 rounded-xl flex items-center justify-center text-xl shadow-sm">🤝</div>
+          <h2 class="text-2xl font-extrabold tracking-tight">Potenciais Parceiros</h2>
+        </div>
+        <p id="parceiros-texto" class="text-muted-foreground leading-relaxed text-base font-medium">
+          <!-- Populated dynamically -->
+        </p>
+      </div>
+    </section>
+
+    <!-- Section: Projetos -->
+    <section class="space-y-8">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-xl shadow-sm">🚀</div>
+        <h2 class="text-2xl font-extrabold tracking-tight">Projetos em Destaque</h2>
+      </div>
+      
+      <div id="projetos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Projetos populated dynamically -->
+      </div>
+    </section>
+
+    <!-- Section: Equipe -->
+    <section class="space-y-8">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-xl shadow-sm">👥</div>
+        <h2 class="text-2xl font-extrabold tracking-tight">Equipe (CEPIN-JCR)</h2>
+      </div>
+      
+      <div class="bg-card border border-border/60 rounded-2xl p-6 shadow-soft space-y-6">
+        <div class="flex gap-4 items-start bg-muted/30 p-4 rounded-xl border border-border/40">
+          <span class="text-2xl">👩‍💼</span>
+          <div id="equipe-intro-text" class="text-sm text-muted-foreground leading-relaxed font-medium">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+        
+        <!-- Table container -->
+        <div class="overflow-x-auto rounded-xl border border-border/50">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-muted/40 border-b border-border/60 text-xs font-bold uppercase text-muted-foreground">
+                <th class="p-4 pl-6">Nome</th>
+                <th class="p-4">Câmpus</th>
+                <th class="p-4">Cargo / Representação</th>
+                <th class="p-4 pr-6 text-right">Contato</th>
+              </tr>
+            </thead>
+            <tbody id="equipe-table-body" class="divide-y divide-border/40 text-sm font-medium">
+              <!-- Populated dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Colaboradores & Desenvolvedores cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+        
+        <!-- Card Colaboradores -->
+        <div class="bg-card border border-border/60 rounded-2xl p-6 shadow-soft space-y-4">
+          <div class="flex items-center gap-3 border-b border-border/40 pb-3">
+            <span class="text-2xl">🤝</span>
+            <h3 class="font-extrabold text-lg tracking-tight">Colaboradores</h3>
+          </div>
+          <div class="overflow-x-auto rounded-xl border border-border/40">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-muted/35 border-b border-border/50 text-[10px] font-bold uppercase text-muted-foreground">
+                  <th class="p-3 pl-4">Nome</th>
+                  <th class="p-3">Função</th>
+                  <th class="p-3 pr-4 text-right">Contato</th>
+                </tr>
+              </thead>
+              <tbody id="colaboradores-table-body" class="divide-y divide-border/40 text-xs font-medium">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+          <div id="colaboradores-empty-state" class="hidden text-center text-xs text-muted-foreground py-4">
+            Nenhum colaborador cadastrado.
+          </div>
+        </div>
+
+        <!-- Card Desenvolvedores -->
+        <div class="bg-card border border-border/60 rounded-2xl p-6 shadow-soft space-y-4">
+          <div class="flex items-center gap-3 border-b border-border/40 pb-3">
+            <span class="text-2xl">💻</span>
+            <h3 class="font-extrabold text-lg tracking-tight">Desenvolvedores</h3>
+          </div>
+          <div class="overflow-x-auto rounded-xl border border-border/40">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-muted/35 border-b border-border/50 text-[10px] font-bold uppercase text-muted-foreground">
+                  <th class="p-3 pl-4">Nome</th>
+                  <th class="p-3">Função</th>
+                  <th class="p-3 pr-4 text-right">Contato</th>
+                </tr>
+              </thead>
+              <tbody id="desenvolvedores-table-body" class="divide-y divide-border/40 text-xs font-medium">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+          <div id="desenvolvedores-empty-state" class="hidden text-center text-xs text-muted-foreground py-4">
+            Nenhum desenvolvedor cadastrado.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Shared JS Library -->
+  <script src="assets/js/db.js"></script>
+  
+  <!-- Dynamic Page Populator -->
+  <script>
+    function loadCepinPage() {
+      const data = getCepinData();
+      
+      // Apresentação Title and Subtitle
+      if (data.apresentacaoTitulo) document.getElementById('page-title').innerHTML = data.apresentacaoTitulo.replace("CEPIN JCR", "<span class='gradient-text'>CEPIN JCR</span>");
+      if (data.apresentacaoSubtitulo) document.getElementById('page-subtitle').innerText = data.apresentacaoSubtitulo;
+      
+      // Apresentação Texts
+      const apresentacaoContainer = document.getElementById('apresentacao-textos');
+      apresentacaoContainer.innerHTML = '';
+      if (data.apresentacaoTexto) {
+        const paragraphs = data.apresentacaoTexto.split(/\n\n+/);
+        paragraphs.forEach(para => {
+          if (para.trim()) {
+            apresentacaoContainer.innerHTML += `<p>${para.trim().replace(/\n/g, '<br>')}</p>`;
+          }
+        });
+      } else {
+        if (data.apresentacaoTexto1) {
+          apresentacaoContainer.innerHTML += `<p>${data.apresentacaoTexto1}</p>`;
+        }
+        if (data.apresentacaoTexto2) {
+          apresentacaoContainer.innerHTML += `<p>${data.apresentacaoTexto2}</p>`;
+        }
+        if (data.apresentacaoTexto3) {
+          apresentacaoContainer.innerHTML += `<p>${data.apresentacaoTexto3}</p>`;
+        }
+      }
+      
+      // Competências Grid
+      const competenciasGrid = document.getElementById('competencias-grid');
+      competenciasGrid.innerHTML = '';
+      
+      const romanNumerals = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII"];
+      const emojiList = ["💡", "📢", "🤝", "📈", "🎓", "⚙️", "🌟", "🧬", "🔍", "💼", "✨", "🌍"];
+      
+      if (data.competencias && Array.isArray(data.competencias)) {
+        data.competencias.forEach((comp, idx) => {
+          const roman = romanNumerals[idx] || (idx + 1);
+          const emoji = emojiList[idx % emojiList.length];
+          
+          const card = document.createElement('div');
+          card.className = "bg-card border border-border/50 rounded-xl p-5 hover:shadow-soft transition-all duration-300 hover:scale-[1.01] flex gap-4";
+          card.innerHTML = `
+            <div class="flex-shrink-0 flex flex-col items-center gap-1.5">
+              <span class="w-8 h-8 rounded-lg bg-primary/10 text-primary font-extrabold text-xs flex items-center justify-center border border-primary/20">${roman}</span>
+              <span class="text-lg">${emoji}</span>
+            </div>
+            <div class="space-y-1">
+              <p class="text-sm text-foreground/90 font-semibold leading-relaxed">${comp}</p>
+            </div>
+          `;
+          competenciasGrid.appendChild(card);
+        });
+      }
+      
+      // Potenciais Parceiros Text
+      if (data.parceirosTexto) {
+        document.getElementById('parceiros-texto').innerText = data.parceirosTexto;
+      }
+      
+      // Projetos Grid
+      const projetosGrid = document.getElementById('projetos-grid');
+      projetosGrid.innerHTML = '';
+      if (data.projetos && Array.isArray(data.projetos)) {
+        data.projetos.forEach(proj => {
+          const card = document.createElement('div');
+          card.className = "bg-gradient-card border border-border/50 rounded-xl p-6 shadow-soft space-y-4 flex flex-col justify-between";
+          card.innerHTML = `
+            <div class="space-y-2">
+              <h3 class="font-extrabold text-lg text-primary tracking-tight">${proj.titulo}</h3>
+              <p class="text-sm text-muted-foreground leading-relaxed font-medium">${proj.descricao}</p>
+            </div>
+            <div class="pt-2">
+              <a 
+                href="${proj.link}" 
+                target="_blank" 
+                class="inline-flex items-center gap-1.5 text-xs text-primary font-extrabold uppercase tracking-wider hover:underline"
+              >
+                <span>Acessar Projeto 🔗</span>
+              </a>
+            </div>
+          `;
+          projetosGrid.appendChild(card);
+        });
+      }
+      
+      // Equipe Intro Text
+      if (data.equipeTexto) {
+        const textFormatted = data.equipeTexto.replace(/\n/g, "<br>");
+        document.getElementById('equipe-intro-text').innerHTML = textFormatted;
+      }
+      
+      // Equipe Members Table
+      const tableBody = document.getElementById('equipe-table-body');
+      tableBody.innerHTML = '';
+      if (data.equipeMembros && Array.isArray(data.equipeMembros)) {
+        data.equipeMembros.forEach(memb => {
+          const tr = document.createElement('tr');
+          tr.className = "hover:bg-muted/10 transition-smooth";
+          tr.innerHTML = `
+            <td class="p-4 pl-6 font-bold text-foreground">${memb.nome}</td>
+            <td class="p-4 text-muted-foreground">${memb.campus}</td>
+            <td class="p-4 text-muted-foreground">${memb.cargo}</td>
+            <td class="p-4 pr-6 text-right text-xs font-mono">
+              <a href="mailto:${memb.contato}" class="text-primary hover:underline font-bold">${memb.contato}</a>
+            </td>
+          `;
+          tableBody.appendChild(tr);
+        });
+      }
+
+      // Colaboradores Table
+      const colabBody = document.getElementById('colaboradores-table-body');
+      const colabEmpty = document.getElementById('colaboradores-empty-state');
+      colabBody.innerHTML = '';
+      if (data.equipeColaboradores && data.equipeColaboradores.length > 0) {
+        colabEmpty.classList.add('hidden');
+        data.equipeColaboradores.forEach(memb => {
+          const tr = document.createElement('tr');
+          tr.className = "hover:bg-muted/10 transition-smooth";
+          tr.innerHTML = `
+            <td class="p-3 pl-4 font-bold text-foreground">${memb.nome}</td>
+            <td class="p-3 text-muted-foreground">${memb.funcao}</td>
+            <td class="p-3 pr-4 text-right text-xs font-mono">
+              ${memb.contato.includes('@') ? `<a href="mailto:${memb.contato}" class="text-primary hover:underline font-bold">${memb.contato}</a>` : `<span class="text-muted-foreground">${memb.contato}</span>`}
+            </td>
+          `;
+          colabBody.appendChild(tr);
+        });
+      } else {
+        colabEmpty.classList.remove('hidden');
+      }
+
+      // Desenvolvedores Table
+      const devBody = document.getElementById('desenvolvedores-table-body');
+      const devEmpty = document.getElementById('desenvolvedores-empty-state');
+      devBody.innerHTML = '';
+      if (data.equipeDesenvolvedores && data.equipeDesenvolvedores.length > 0) {
+        devEmpty.classList.add('hidden');
+        data.equipeDesenvolvedores.forEach(memb => {
+          const tr = document.createElement('tr');
+          tr.className = "hover:bg-muted/10 transition-smooth";
+          tr.innerHTML = `
+            <td class="p-3 pl-4 font-bold text-foreground">${memb.nome}</td>
+            <td class="p-3 text-muted-foreground">${memb.funcao}</td>
+            <td class="p-3 pr-4 text-right text-xs font-mono">
+              ${memb.contato.includes('@') ? `<a href="mailto:${memb.contato}" class="text-primary hover:underline font-bold">${memb.contato}</a>` : `<span class="text-muted-foreground">${memb.contato}</span>`}
+            </td>
+          `;
+          devBody.appendChild(tr);
+        });
+      } else {
+        devEmpty.classList.remove('hidden');
+      }
+    }
+
+    // Load on load
+    window.addEventListener('load', loadCepinPage);
+    
+    // Support hot sync complete
+    window.dispatchEvent(new CustomEvent('cepinSyncComplete'));
+  </script>
+
+</body>
+</html>

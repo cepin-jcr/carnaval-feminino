@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil do Bloco - Blocos Feministas</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind CSS Configuration -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            border: "hsl(var(--border))",
+            input: "hsl(var(--input))",
+            ring: "hsl(var(--ring))",
+            background: "hsl(var(--background))",
+            foreground: "hsl(var(--foreground))",
+            primary: {
+              DEFAULT: "hsl(var(--primary))",
+              foreground: "hsl(var(--primary-foreground))",
+              glow: "hsl(var(--primary-glow))",
+            },
+            secondary: {
+              DEFAULT: "hsl(var(--secondary))",
+              foreground: "hsl(var(--secondary-foreground))",
+            },
+            destructive: {
+              DEFAULT: "hsl(var(--destructive))",
+              foreground: "hsl(var(--destructive-foreground))",
+            },
+            success: {
+              DEFAULT: "hsl(var(--success))",
+              foreground: "hsl(var(--success-foreground))",
+            },
+            muted: {
+              DEFAULT: "hsl(var(--muted))",
+              foreground: "hsl(var(--muted-foreground))",
+            },
+            accent: {
+              DEFAULT: "hsl(var(--accent))",
+              foreground: "hsl(var(--accent-foreground))",
+            },
+            popover: {
+              DEFAULT: "hsl(var(--popover))",
+              foreground: "hsl(var(--popover-foreground))",
+            },
+            card: {
+              DEFAULT: "hsl(var(--card))",
+              foreground: "hsl(var(--card-foreground))",
+            },
+            carnival: {
+              purple: "hsl(var(--carnival-purple))",
+              pink: "hsl(var(--carnival-pink))",
+              gold: "hsl(var(--carnival-gold))",
+              orange: "hsl(var(--carnival-orange))",
+            }
+          },
+          boxShadow: {
+            'carnival': 'var(--shadow-carnival)',
+            'soft': 'var(--shadow-soft)',
+            'glow': 'var(--shadow-glow)',
+          },
+          borderRadius: {
+            lg: "var(--radius)",
+            md: "calc(var(--radius) - 2px)",
+            sm: "calc(var(--radius) - 4px)",
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Global Custom CSS -->
+  <link rel="stylesheet" href="assets/css/global.css">
+</head>
+<body class="min-h-screen bg-background text-foreground transition-all duration-300">
+
+  <!-- Header Dynamic Element -->
+  <div id="header-placeholder"></div>
+
+  <div class="container mx-auto px-4 py-8">
+    
+    <!-- Back Navigation Button -->
+    <a 
+      href="index.html" 
+      class="mb-6 inline-flex items-center gap-2 text-sm font-semibold hover:text-primary transition-smooth py-2 px-3 hover:bg-muted rounded-lg"
+    >
+      ⬅️ Voltar ao mapa
+    </a>
+    
+    <!-- NotFound Container (Hidden by default) -->
+    <div id="block-not-found" class="hidden text-center py-16">
+      <h1 class="text-3xl font-extrabold mb-4">Bloco não encontrado</h1>
+      <p class="text-muted-foreground mb-6">O bloco solicitado não existe ou foi removido.</p>
+      <a href="index.html" class="bg-primary hover:bg-primary/95 text-white font-bold py-2.5 px-6 rounded-lg shadow-sm">
+        Voltar à página inicial
+      </a>
+    </div>
+
+    <!-- Profile Grid Container -->
+    <div id="block-profile-content" class="grid lg:grid-cols-3 gap-8">
+      
+      <!-- Main Content (Left Column) -->
+      <div class="lg:col-span-2 space-y-6">
+        
+        <!-- Hero Section Card -->
+        <div class="overflow-hidden rounded-xl border border-border bg-gradient-card shadow-soft">
+          <div class="relative h-64 md:h-80">
+            <img 
+              id="block-hero-image"
+              src="assets/images/placeholder.svg" 
+              alt="Nome do Bloco"
+              class="w-full h-full object-cover"
+              onerror="this.src='assets/images/placeholder.svg'"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+            <div class="absolute bottom-6 left-6 right-6">
+              <h1 id="block-title" class="text-3xl md:text-4xl font-extrabold text-white mb-2 drop-shadow">
+                Carregando...
+              </h1>
+              <div class="flex items-center gap-2 text-white/90">
+                <span>📍</span>
+                <span id="block-location" class="text-base md:text-lg font-medium drop-shadow">Cidade - Estado</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- About Section Card -->
+        <div class="rounded-xl border border-border bg-card text-card-foreground p-6 shadow-soft">
+          <h2 class="text-xl font-bold flex items-center gap-2 mb-4 border-b border-border/50 pb-3">
+            ❤️ Sobre o Bloco
+          </h2>
+          <div class="space-y-4">
+            <p id="block-description" class="text-muted-foreground leading-relaxed">
+              Carregando descrição...
+            </p>
+            
+            <div id="block-history-container" class="hidden">
+              <div class="h-[1px] bg-border/50 my-4"></div>
+              <h3 class="font-semibold mb-2">História</h3>
+              <p id="block-history" class="text-muted-foreground leading-relaxed">
+                História detalhada do bloco...
+              </p>
+            </div>
+
+            <div id="block-music-container" class="hidden">
+              <div class="h-[1px] bg-border/50 my-4"></div>
+              <h3 class="font-semibold mb-2 flex items-center gap-2">
+                🎵 Estilo Musical
+              </h3>
+              <p id="block-music" class="text-muted-foreground leading-relaxed">
+                Estilo de música...
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Photo Gallery Carousel Card -->
+        <div id="gallery-card" class="rounded-xl border border-border bg-card p-6 shadow-soft">
+          <h2 class="text-xl font-bold mb-4 border-b border-border/50 pb-3">📸 Galeria de Fotos</h2>
+          
+          <div class="space-y-4">
+            <!-- Main Display Image -->
+            <div class="relative overflow-hidden rounded-lg aspect-video bg-muted border border-border">
+              <img 
+                id="gallery-main-image"
+                src="assets/images/placeholder.svg" 
+                alt="Foto"
+                class="w-full h-full object-cover"
+              />
+              <button
+                onclick="prevGalleryImage()"
+                class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white w-9 h-9 flex items-center justify-center rounded-full transition-all"
+              >
+                ◀
+              </button>
+              <button
+                onclick="nextGalleryImage()"
+                class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white w-9 h-9 flex items-center justify-center rounded-full transition-all"
+              >
+                ▶
+              </button>
+              <div id="gallery-counter" class="absolute bottom-3 right-3 bg-black/60 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                1 / 1
+              </div>
+            </div>
+            <!-- Thumbnails Container -->
+            <div id="gallery-thumbnails" class="grid grid-cols-4 sm:grid-cols-6 gap-2">
+              <!-- Rendered Dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Videos Section Card -->
+        <div id="videos-card" class="rounded-xl border border-border bg-card p-6 shadow-soft hidden">
+          <h2 class="text-xl font-bold mb-4 border-b border-border/50 pb-3">🎥 Vídeos</h2>
+          <div id="videos-container" class="space-y-4">
+            <!-- Embedded Videos -->
+          </div>
+        </div>
+
+        <!-- Location Map Card -->
+        <div class="rounded-xl border border-border bg-card p-6 shadow-soft">
+          <h2 class="text-xl font-bold mb-4 border-b border-border/50 pb-3">🗺️ Localização no Mapa</h2>
+          <div class="w-full h-64 md:h-80 rounded-lg overflow-hidden border border-border z-0">
+            <div id="mini-map" class="w-full h-full"></div>
+          </div>
+          <p id="block-address" class="text-sm text-muted-foreground mt-3 flex items-center gap-1.5">
+            📍 Endereço não informado.
+          </p>
+        </div>
+
+        <!-- Block Upcoming Events -->
+        <div id="block-events-card" class="rounded-xl border border-border bg-card p-6 shadow-soft hidden">
+          <h2 class="text-xl font-bold flex items-center gap-2 mb-4 border-b border-border/50 pb-3">
+            📅 Próximos Eventos deste Bloco
+          </h2>
+          <div id="block-events-list" class="space-y-4">
+            <!-- List of events rendered dynamically -->
+          </div>
+        </div>
+
+      </div>
+      
+      <!-- Sidebar Content (Right Column) -->
+      <div class="space-y-6">
+        
+        <!-- Details Card -->
+        <div class="rounded-xl border border-border bg-card text-card-foreground p-6 shadow-soft">
+          <h3 class="text-lg font-bold mb-4 border-b border-border/50 pb-3">Ficha Técnica</h3>
+          
+          <div class="space-y-4">
+            <div id="block-sidebar-responsavel-container" class="flex items-center gap-3 hidden">
+              <div class="text-xl">👩‍💼</div>
+              <div>
+                <p class="font-semibold text-sm">Responsável</p>
+                <p id="block-sidebar-responsavel" class="text-xs text-muted-foreground">Carregando...</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div class="text-xl">👥</div>
+              <div>
+                <p class="font-semibold text-sm">Formação</p>
+                <p id="block-sidebar-formacao" class="text-xs text-muted-foreground">Carregando...</p>
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-3">
+              <div class="text-xl">✉️</div>
+              <div>
+                <p class="font-semibold text-sm">Contato</p>
+                <p id="block-sidebar-contato" class="text-xs text-muted-foreground text-ellipsis overflow-hidden max-w-[200px]">Carregando...</p>
+              </div>
+            </div>
+            
+            <div id="block-sidebar-cache-container" class="flex items-center gap-3 hidden">
+              <div class="text-xl">💰</div>
+              <div>
+                <p class="font-semibold text-sm">Cachê</p>
+                <p id="block-sidebar-cache" class="text-xs text-muted-foreground">Carregando...</p>
+              </div>
+            </div>
+            
+            <div id="block-sidebar-dias-container" class="flex items-start gap-3 hidden">
+              <div class="text-xl">📅</div>
+              <div>
+                <p class="font-semibold text-sm">Dias de Desfile</p>
+                <p id="block-sidebar-dias" class="text-xs text-muted-foreground">Carregando...</p>
+              </div>
+            </div>
+            
+            <div id="block-sidebar-atividades-container" class="flex items-start gap-3 hidden">
+              <div class="text-xl">🌸</div>
+              <div>
+                <p class="font-semibold text-sm">Atividades Realizadas</p>
+                <div id="block-sidebar-atividades" class="text-xs text-muted-foreground space-y-1 mt-1">
+                  <!-- Bullet items -->
+                </div>
+              </div>
+            </div>
+
+            <div class="h-[1px] bg-border/50 my-4"></div>
+            
+            <div>
+              <span id="block-sidebar-vertente" class="block w-full text-center text-xs font-semibold bg-primary/10 text-primary py-1.5 px-3 rounded-lg border border-primary/20">
+                Vertente Feminista
+              </span>
+            </div>
+
+            <!-- Social Media Box -->
+            <div id="block-sidebar-socials" class="space-y-1.5 pt-2">
+              <!-- Rendered dynamically -->
+            </div>
+
+            <!-- Action buttons -->
+            <div class="flex gap-2 pt-4 border-t border-border/50">
+              <button 
+                id="btn-direct-contact"
+                class="flex-1 bg-primary hover:bg-primary/95 text-white font-bold py-2 px-4 rounded-lg text-sm shadow-sm transition-all duration-300 text-center"
+              >
+                Entrar em Contato
+              </button>
+              <button 
+                id="btn-favorite"
+                onclick="toggleFavoriteBlock()"
+                class="border border-input hover:bg-muted text-foreground p-2 rounded-lg transition-smooth flex items-center justify-center"
+                title="Favoritar"
+              >
+                🖤
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Sidebar Actions Panel -->
+        <div class="rounded-xl border border-border bg-card p-6 shadow-soft">
+          <h3 class="text-lg font-bold mb-4 border-b border-border/50 pb-3">Ações</h3>
+          <div class="space-y-3">
+            <button 
+              onclick="openModal('schedule-modal')"
+              class="w-full bg-gradient-secondary text-white font-bold py-2.5 px-4 rounded-lg text-sm transition-all duration-300 hover:shadow-md hover:scale-[1.01]"
+            >
+              📅 Agendar Apresentação
+            </button>
+            <button 
+              onclick="openModal('share-modal')"
+              class="w-full border border-input hover:bg-muted text-foreground font-semibold py-2.5 px-4 rounded-lg text-sm transition-smooth"
+            >
+              🔗 Compartilhar Perfil
+            </button>
+            <button 
+              onclick="openModal('report-modal')"
+              class="w-full border border-input hover:bg-muted text-foreground font-semibold py-2.5 px-4 rounded-lg text-sm transition-smooth"
+            >
+              ⚠️ Reportar Problema
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ================= DIALOG MODALS ================= -->
+
+  <!-- Modal: Schedule Presentation -->
+  <div id="schedule-modal" class="fixed inset-0 z-50 hidden bg-black/60 flex items-center justify-center p-4 backdrop-blur-sm">
+    <div class="bg-card text-card-foreground border border-border rounded-xl max-w-md w-full p-6 shadow-carnival animate-scaleIn">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-bold">Agendar Apresentação</h3>
+        <button onclick="closeModal('schedule-modal')" class="text-muted-foreground hover:text-foreground text-lg">✕</button>
+      </div>
+      <p class="text-sm text-muted-foreground mb-4">Preencha os dados do convite para agendar uma apresentação com o bloco.</p>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold mb-1">Data desejada</label>
+          <input id="schedule-date" type="date" class="w-full px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1">Local / Evento</label>
+          <input id="schedule-location" type="text" placeholder="Ex: Carnaval de Rua - Praça da República" class="w-full px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1">Detalhes adicionais</label>
+          <textarea id="schedule-details" placeholder="Detalhes como cachê, público estimado, estrutura do palco, etc." class="w-full min-h-20 px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+        </div>
+        <div class="flex gap-3 pt-2">
+          <button onclick="closeModal('schedule-modal')" class="flex-1 border border-input hover:bg-muted py-2 rounded-lg text-sm transition-smooth font-medium">Cancelar</button>
+          <button onclick="submitSchedule()" class="flex-1 bg-primary hover:bg-primary/95 text-white py-2 rounded-lg text-sm transition-smooth font-bold">Enviar Solicitação</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Report Problem -->
+  <div id="report-modal" class="fixed inset-0 z-50 hidden bg-black/60 flex items-center justify-center p-4 backdrop-blur-sm">
+    <div class="bg-card text-card-foreground border border-border rounded-xl max-w-md w-full p-6 shadow-carnival animate-scaleIn">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-bold">Reportar Problema</h3>
+        <button onclick="closeModal('report-modal')" class="text-muted-foreground hover:text-foreground text-lg">✕</button>
+      </div>
+      <p class="text-sm text-muted-foreground mb-4">Relate inconsistências ou dados incorretos no perfil deste bloco.</p>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold mb-1">Tipo de problema</label>
+          <select id="report-type" class="w-full px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50">
+            <option value="bug">Erro no site / Bug</option>
+            <option value="info">Informação de contato incorreta</option>
+            <option value="missing">Dados incompletos</option>
+            <option value="inappropriate">Conteúdo ofensivo ou impróprio</option>
+            <option value="other">Outro motivo</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1">Descrição</label>
+          <textarea id="report-desc" placeholder="Descreva brevemente o problema..." class="w-full min-h-24 px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+        </div>
+        <div class="flex gap-3 pt-2">
+          <button onclick="closeModal('report-modal')" class="flex-1 border border-input hover:bg-muted py-2 rounded-lg text-sm transition-smooth font-medium">Cancelar</button>
+          <button onclick="submitReport()" class="flex-1 bg-primary hover:bg-primary/95 text-white py-2 rounded-lg text-sm transition-smooth font-bold">Enviar Relatório</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Share -->
+  <div id="share-modal" class="fixed inset-0 z-50 hidden bg-black/60 flex items-center justify-center p-4 backdrop-blur-sm">
+    <div class="bg-card text-card-foreground border border-border rounded-xl max-w-sm w-full p-6 shadow-carnival animate-scaleIn">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-bold">Compartilhar Bloco</h3>
+        <button onclick="closeModal('share-modal')" class="text-muted-foreground hover:text-foreground text-lg">✕</button>
+      </div>
+      <div class="space-y-3">
+        <button onclick="shareWhatsApp()" class="w-full flex items-center gap-2 border border-input hover:bg-muted p-2.5 rounded-lg text-sm transition-smooth font-medium text-left">
+          <span>💬</span> Compartilhar no WhatsApp
+        </button>
+        <button onclick="shareEmail()" class="w-full flex items-center gap-2 border border-input hover:bg-muted p-2.5 rounded-lg text-sm transition-smooth font-medium text-left">
+          <span>✉️</span> Compartilhar por Email
+        </button>
+        <button onclick="copyPageLink()" class="w-full flex items-center gap-2 border border-input hover:bg-muted p-2.5 rounded-lg text-sm transition-smooth font-medium text-left">
+          <span>📋</span> Copiar Link do Perfil
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Shared JS Library -->
+  <script src="assets/js/db.js"></script>
+
+  <!-- Leaflet Map JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Page Logic -->
+  <script>
+    let block = null;
+    let miniMap = null;
+    let galleryImages = [];
+    let currentImgIdx = 0;
+
+    // Load URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const blockId = urlParams.get('id');
+
+    function openModal(id) {
+      document.getElementById(id)?.classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id)?.classList.add('hidden');
+    }
+
+    // Load block data and populate page elements
+    function loadBlockProfile() {
+      if (!blockId) {
+        showNotFound();
+        return;
+      }
+      
+      block = getBlock(blockId);
+      if (!block) {
+        showNotFound();
+        return;
+      }
+
+      // Set Document Title
+      document.title = `${block.nome} - Perfis dos Blocos Feministas`;
+
+      // Fill main details
+      document.getElementById('block-title').innerText = block.nome;
+      document.getElementById('block-location').innerText = `${block.cidade || ''}, ${block.estado || ''}`;
+      document.getElementById('block-description').innerText = block.descricao || 'Sem descrição cadastrada.';
+
+      if (block.foto) {
+        document.getElementById('block-hero-image').src = block.foto;
+      }
+
+      // History
+      if (block.historia) {
+        document.getElementById('block-history').innerText = block.historia;
+        document.getElementById('block-history-container').classList.remove('hidden');
+      }
+
+      // Musical Style
+      if (block.estilo) {
+        document.getElementById('block-music').innerText = block.estilo;
+        document.getElementById('block-music-container').classList.remove('hidden');
+      }
+
+      // Sidebar Technical Fields
+      if (block.responsavel) {
+        document.getElementById('block-sidebar-responsavel').innerText = block.responsavel;
+        document.getElementById('block-sidebar-responsavel-container').classList.remove('hidden');
+      } else {
+        document.getElementById('block-sidebar-responsavel-container').classList.add('hidden');
+      }
+      document.getElementById('block-sidebar-formacao').innerText = block.formacao || 'Mista';
+      document.getElementById('block-sidebar-contato').innerText = block.contato || 'Não informado';
+      document.getElementById('block-sidebar-vertente').innerText = block.vertenteFeminista || 'Feminismo Interseccional';
+
+      if (block.cache) {
+        document.getElementById('block-sidebar-cache').innerText = block.cache;
+        document.getElementById('block-sidebar-cache-container').classList.remove('hidden');
+      }
+      if (block.dias) {
+        document.getElementById('block-sidebar-dias').innerText = block.dias;
+        document.getElementById('block-sidebar-dias-container').classList.remove('hidden');
+      }
+
+      // Atividades checklist
+      if (block.atividades) {
+        const ativs = block.atividades.split('|').filter(Boolean);
+        const container = document.getElementById('block-sidebar-atividades');
+        container.innerHTML = '';
+        
+        const labels = {
+          venda: 'Venda de produtos para arrecadação',
+          encontros: 'Encontros, festas e shows cobrados',
+          ensaios_publico: 'Ensaios abertos ao público',
+          ensaios_aprendizado: 'Ensaios e aprendizagem',
+          oficinas: 'Oficinas de formação rítmica',
+          protesto: 'Movimentos sociais tais como participação em outras organizações carnavalescas',
+          dialogos: 'Diálogos institucionais',
+          formacao_politica: 'Formação política feminista'
+        };
+
+        ativs.forEach(ativ => {
+          if (ativ.startsWith('outro:')) {
+            const custom = ativ.replace('outro:', '');
+            if (custom) {
+              const div = document.createElement('div');
+              div.innerText = `• ${custom}`;
+              container.appendChild(div);
+            }
+          } else if (ativ !== 'outro') {
+            const div = document.createElement('div');
+            div.innerText = `• ${labels[ativ] || ativ}`;
+            container.appendChild(div);
+          }
+        });
+        
+        if (ativs.length > 0) {
+          document.getElementById('block-sidebar-atividades-container').classList.remove('hidden');
+        }
+      }
+
+      // Address text
+      if (block.endereco) {
+        document.getElementById('block-address').innerHTML = `📍 <strong>Endereço:</strong> ${block.endereco}`;
+      } else if (block.cidade) {
+        document.getElementById('block-address').innerHTML = `📍 <strong>Atua em:</strong> ${block.cidade}, ${block.estado}`;
+      }
+
+      // Social networks
+      const socialsBox = document.getElementById('block-sidebar-socials');
+      socialsBox.innerHTML = '';
+      if (block.redesSociais) {
+        const redes = block.redesSociais;
+        if (redes.instagram) {
+          const handle = redes.instagram.replace('@', '');
+          socialsBox.innerHTML += `
+            <a href="https://instagram.com/${handle}" target="_blank" class="flex items-center gap-2 text-sm text-primary hover:underline font-semibold">
+              📸 Instagram: ${redes.instagram}
+            </a>`;
+        }
+        if (redes.facebook) {
+          socialsBox.innerHTML += `
+            <span class="flex items-center gap-2 text-sm text-muted-foreground font-semibold">
+              👥 Facebook: ${redes.facebook}
+            </span>`;
+        }
+        if (redes.youtube) {
+          socialsBox.innerHTML += `
+            <span class="flex items-center gap-2 text-sm text-muted-foreground font-semibold">
+              🎥 YouTube: ${redes.youtube}
+            </span>`;
+        }
+      }
+
+      // Favorite button color sync
+      const favorites = JSON.parse(localStorage.getItem('bf_favorites') || '[]');
+      if (favorites.includes(blockId)) {
+        document.getElementById('btn-favorite').innerText = '❤️';
+      }
+
+      // Image Gallery Setup
+      galleryImages = [];
+      if (block.foto) galleryImages.push(block.foto);
+      if (block.imagens && Array.isArray(block.imagens)) {
+        block.imagens.forEach(img => {
+          if (img && img !== block.foto) galleryImages.push(img);
+        });
+      }
+
+      renderGallery();
+
+      // Videos Setup
+      if (block.videos && Array.isArray(block.videos) && block.videos.length > 0) {
+        const videoSection = document.getElementById('videos-card');
+        const videoContainer = document.getElementById('videos-container');
+        videoContainer.innerHTML = '';
+        
+        block.videos.forEach(vidUrl => {
+          if (!vidUrl) return;
+          const frame = document.createElement('div');
+          frame.className = 'relative w-full aspect-video rounded-lg overflow-hidden bg-muted border border-border shadow';
+          frame.innerHTML = `<iframe src="${vidUrl}" class="w-full h-full" allowfullscreen></iframe>`;
+          videoContainer.appendChild(frame);
+        });
+        videoSection.classList.remove('hidden');
+      }
+
+      // Direct email mailto hook
+      document.getElementById('btn-direct-contact').addEventListener('click', () => {
+        if (block.contato) {
+          const emailPart = block.contato.split('|').map(s => s.trim()).find(s => s.includes('@'));
+          if (emailPart) {
+            window.location.href = `mailto:${emailPart}`;
+            showToast('Abrindo gerenciador de e-mail... 📧');
+          } else {
+            // Find numbers
+            const numPart = block.contato.replace(/\D/g, '');
+            if (numPart.length >= 10) {
+              window.open(`https://wa.me/${numPart}`, '_blank');
+              showToast('Abrindo WhatsApp... 📱');
+            } else {
+              showToast('Abrindo canal de contato: ' + block.contato);
+            }
+          }
+        }
+      });
+
+      // Render mini map location
+      initMiniMap();
+
+      // Render block events
+      renderBlockEvents();
+    }
+
+    // Render Gallery Carousel
+    function renderGallery() {
+      const galleryCard = document.getElementById('gallery-card');
+      if (galleryImages.length === 0) {
+        galleryCard.classList.add('hidden');
+        return;
+      }
+      galleryCard.classList.remove('hidden');
+
+      const mainImg = document.getElementById('gallery-main-image');
+      const counter = document.getElementById('gallery-counter');
+      const thumbsGrid = document.getElementById('gallery-thumbnails');
+      
+      mainImg.src = galleryImages[currentImgIdx];
+      counter.innerText = `${currentImgIdx + 1} / ${galleryImages.length}`;
+
+      // Thumbs
+      thumbsGrid.innerHTML = '';
+      if (galleryImages.length > 1) {
+        galleryImages.forEach((img, idx) => {
+          const btn = document.createElement('button');
+          btn.className = `relative overflow-hidden rounded-lg aspect-square border-2 transition-all ${
+            idx === currentImgIdx ? 'border-primary scale-[0.98]' : 'border-muted-foreground/20 hover:border-primary/50'
+          }`;
+          btn.onclick = () => {
+            currentImgIdx = idx;
+            renderGallery();
+          };
+          btn.innerHTML = `<img src="${img}" alt="Miniatura" class="w-full h-full object-cover" onerror="this.src='assets/images/placeholder.svg'" />`;
+          thumbsGrid.appendChild(btn);
+        });
+      }
+    }
+
+    function prevGalleryImage() {
+      currentImgIdx = (currentImgIdx === 0) ? galleryImages.length - 1 : currentImgIdx - 1;
+      renderGallery();
+    }
+
+    function nextGalleryImage() {
+      currentImgIdx = (currentImgIdx === galleryImages.length - 1) ? 0 : currentImgIdx + 1;
+      renderGallery();
+    }
+
+    // Mini Map render
+    function initMiniMap() {
+      if (!block || !block.localLat || !block.localLng) return;
+
+      const coords = [block.localLat, block.localLng];
+      if (miniMap) {
+        miniMap.setView(coords, 14);
+        return;
+      }
+      miniMap = L.map('mini-map').setView(coords, 14);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(miniMap);
+
+      const customIcon = L.icon({
+        iconUrl: 'assets/images/map-pin-block.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 32]
+      });
+
+      L.marker(coords, { icon: customIcon }).addTo(miniMap);
+    }
+
+    // Render Events List
+    function renderBlockEvents() {
+      const events = getEvents().filter(e => e.blocoId === blockId);
+      const eventsCard = document.getElementById('block-events-card');
+      const eventsList = document.getElementById('block-events-list');
+      
+      if (events.length === 0) {
+        eventsCard.classList.add('hidden');
+        return;
+      }
+      eventsCard.classList.remove('hidden');
+      eventsList.innerHTML = '';
+
+      events.forEach(ev => {
+        const item = document.createElement('div');
+        item.className = 'flex gap-4 p-4 bg-muted/40 border border-border/50 rounded-lg hover:shadow-sm transition-smooth';
+        
+        const dateObj = new Date(ev.data);
+        const day = dateObj.getDate().toString().padStart(2, '0');
+        const month = dateObj.toLocaleString('pt-BR', { month: 'short' }).toUpperCase().replace('.', '');
+        
+        item.innerHTML = `
+          <div class="flex-shrink-0 text-center w-14 border border-primary/20 bg-primary/5 rounded-lg py-2">
+            <span class="block text-xl font-bold text-primary">${day}</span>
+            <span class="block text-[10px] font-bold text-muted-foreground">${month}</span>
+          </div>
+          <div class="flex-grow min-w-0">
+            <div class="flex flex-wrap items-center gap-2 mb-1">
+              <span class="text-[10px] font-bold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded">${ev.tipo}</span>
+              <span class="text-xs text-muted-foreground">🕒 ${ev.horario || 'Horário a combinar'}</span>
+            </div>
+            <h4 class="font-bold text-sm text-foreground truncate">${ev.nome}</h4>
+            <p class="text-xs text-muted-foreground line-clamp-2 mt-1 leading-relaxed">${ev.descricao || 'Sem descrição.'}</p>
+            <p class="text-xs text-primary font-medium mt-1.5 flex items-center gap-1">📍 ${ev.local || 'Não definido'}</p>
+          </div>
+        `;
+        eventsList.appendChild(item);
+      });
+    }
+
+    // Favorite toggle
+    function toggleFavoriteBlock() {
+      const favorites = JSON.parse(localStorage.getItem('bf_favorites') || '[]');
+      const index = favorites.indexOf(blockId);
+      
+      if (index >= 0) {
+        // Unfavorite
+        favorites.splice(index, 1);
+        document.getElementById('btn-favorite').innerText = '🖤';
+        showToast('Removido dos favoritos 💔');
+      } else {
+        // Favorite
+        favorites.push(blockId);
+        document.getElementById('btn-favorite').innerText = '❤️';
+        showToast('Adicionado aos favoritos ❤️');
+      }
+      localStorage.setItem('bf_favorites', JSON.stringify(favorites));
+    }
+
+    function showNotFound() {
+      document.getElementById('block-profile-content').classList.add('hidden');
+      document.getElementById('block-not-found').classList.remove('hidden');
+    }
+
+    // Modal submit handlers
+    function submitSchedule() {
+      const date = document.getElementById('schedule-date').value;
+      const loc = document.getElementById('schedule-location').value;
+      const details = document.getElementById('schedule-details').value;
+
+      if (!date || !loc) {
+        showToast('Preencha pelo menos a data e o local! ⚠️');
+        return;
+      }
+
+      const subject = `Agendamento de Apresentação - ${block.nome}`;
+      const body = `Olá, gostaria de solicitar uma apresentação do bloco ${block.nome}.\n\nDetalhes:\nData: ${date}\nLocal: ${loc}\nDescrição: ${details}`;
+      
+      window.location.href = `mailto:${block.contato.split('|')[0]}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      
+      closeModal('schedule-modal');
+      showToast('Solicitação de agendamento aberta no e-mail! 📧');
+    }
+
+    function submitReport() {
+      const type = document.getElementById('report-type').value;
+      const desc = document.getElementById('report-desc').value;
+
+      if (!desc) {
+        showToast('Descreva o problema encontrado! ⚠️');
+        return;
+      }
+
+      const subject = `[Relatório de Erro] ${type} - ${block.nome}`;
+      const body = `Tipo de erro: ${type}\n\nDescrição:\n${desc}\n\nPerfil do Bloco: ${block.nome} (${window.location.href})`;
+
+      window.location.href = `mailto:suporte@blocosfeministas.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      closeModal('report-modal');
+      showToast('Relatório de erro preparado no e-mail! 📧');
+    }
+
+    // Social shares
+    function shareWhatsApp() {
+      const url = encodeURIComponent(window.location.href);
+      const text = encodeURIComponent(`Olha esse bloco carnavalesco feminista que encontrei: ${block.nome} no Mapeamento de Resistência! `);
+      window.open(`https://wa.me/?text=${text}${url}`, '_blank');
+      closeModal('share-modal');
+    }
+
+    function shareEmail() {
+      const subject = encodeURIComponent(`Bloco Feminista - ${block.nome}`);
+      const body = encodeURIComponent(`Veja as informações sobre o bloco ${block.nome}: ${window.location.href}`);
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      closeModal('share-modal');
+    }
+
+    function copyPageLink() {
+      navigator.clipboard.writeText(window.location.href);
+      showToast('Link copiado para a área de transferência! 📋');
+      closeModal('share-modal');
+    }
+
+    // Run on load
+    window.addEventListener('load', () => {
+      setTimeout(loadBlockProfile, 300);
+    });
+
+    window.addEventListener('dbSyncComplete', () => {
+      loadBlockProfile();
+    });
+  </script>
+</body>
+</html>

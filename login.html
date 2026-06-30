@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrar - Blocos Feministas</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind CSS Configuration -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            border: "hsl(var(--border))",
+            input: "hsl(var(--input))",
+            ring: "hsl(var(--ring))",
+            background: "hsl(var(--background))",
+            foreground: "hsl(var(--foreground))",
+            primary: {
+              DEFAULT: "hsl(var(--primary))",
+              foreground: "hsl(var(--primary-foreground))",
+              glow: "hsl(var(--primary-glow))",
+            },
+            secondary: {
+              DEFAULT: "hsl(var(--secondary))",
+              foreground: "hsl(var(--secondary-foreground))",
+            },
+            destructive: {
+              DEFAULT: "hsl(var(--destructive))",
+              foreground: "hsl(var(--destructive-foreground))",
+            },
+            success: {
+              DEFAULT: "hsl(var(--success))",
+              foreground: "hsl(var(--success-foreground))",
+            },
+            muted: {
+              DEFAULT: "hsl(var(--muted))",
+              foreground: "hsl(var(--muted-foreground))",
+            },
+            accent: {
+              DEFAULT: "hsl(var(--accent))",
+              foreground: "hsl(var(--accent-foreground))",
+            },
+            popover: {
+              DEFAULT: "hsl(var(--popover))",
+              foreground: "hsl(var(--popover-foreground))",
+            },
+            card: {
+              DEFAULT: "hsl(var(--card))",
+              foreground: "hsl(var(--card-foreground))",
+            },
+            carnival: {
+              purple: "hsl(var(--carnival-purple))",
+              pink: "hsl(var(--carnival-pink))",
+              gold: "hsl(var(--carnival-gold))",
+              orange: "hsl(var(--carnival-orange))",
+            }
+          },
+          boxShadow: {
+            'carnival': 'var(--shadow-carnival)',
+            'soft': 'var(--shadow-soft)',
+            'glow': 'var(--shadow-glow)',
+          },
+          borderRadius: {
+            lg: "var(--radius)",
+            md: "calc(var(--radius) - 2px)",
+            sm: "calc(var(--radius) - 4px)",
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Global Custom CSS -->
+  <link rel="stylesheet" href="assets/css/global.css">
+</head>
+<body class="min-h-screen bg-gradient-to-br from-background via-background to-carnival-purple/5 text-foreground flex flex-col transition-all duration-300">
+
+  <!-- Botão Voltar - Canto Superior Esquerdo -->
+  <div class="fixed top-4 left-4 z-50">
+    <a 
+      href="index.html" 
+      class="inline-flex items-center gap-2 justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-muted hover:text-accent-foreground h-9 px-4 py-2 text-foreground/80 hover:text-foreground font-semibold"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      Voltar para Home
+    </a>
+  </div>
+
+  <!-- Main Container -->
+  <div class="flex-grow flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+
+      <!-- Logo/Header -->
+      <div class="text-center mb-8">
+        <h1 class="text-3xl md:text-4xl font-bold gradient-text mb-2">Blocos Feministas</h1>
+        <p class="text-muted-foreground">Acesso à Área Administrativa</p>
+      </div>
+
+      <!-- Card -->
+      <div class="rounded-xl border border-carnival-gold/20 bg-gradient-card text-card-foreground shadow-sm">
+        <div class="flex flex-col space-y-1.5 p-6">
+          <h3 class="font-semibold tracking-tight text-center text-2xl">Entrar</h3>
+        </div>
+        
+        <div class="p-6 pt-0">
+          <form id="login-form" onsubmit="handleLoginSubmit(event)" class="space-y-4">
+            
+            <!-- Error Alert -->
+            <div id="error-alert" class="hidden flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-600">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 flex-shrink-0"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              <p id="error-message" class="text-sm"></p>
+            </div>
+            
+            <div>
+              <label for="username" class="text-sm font-medium text-muted-foreground mb-1 block">Email</label>
+              <input 
+                type="text" 
+                id="username" 
+                placeholder="seu@email.com" 
+                required
+                class="bg-background/50 flex h-9 w-full rounded-md border border-input px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+              />
+            </div>
+            
+            <div>
+              <label for="password" class="text-sm font-medium text-muted-foreground mb-1 block">Senha</label>
+              <input 
+                type="password" 
+                id="password" 
+                placeholder="••••••••" 
+                required
+                class="bg-background/50 flex h-9 w-full rounded-md border border-input px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+              />
+            </div>
+            
+            <button 
+              type="submit" 
+              class="w-full bg-gradient-primary hover:shadow-glow inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-white shadow hover:bg-primary/90 h-9 px-4 py-2 cursor-pointer"
+            >
+              Entrar
+            </button>
+            
+            <div class="text-sm text-center text-muted-foreground">
+              Não tem conta? 
+              <a href="cadastro.html" class="text-primary hover:underline font-medium">
+                Criar conta
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Shared JS Library -->
+  <script src="assets/js/db.js"></script>
+
+  <!-- Login Handling -->
+  <script>
+    // Redirect if user already logged in
+    window.addEventListener('load', () => {
+      if (getCurrentUser()) {
+        window.location.href = 'admin.html';
+      }
+    });
+
+    async function handleLoginSubmit(event) {
+      event.preventDefault();
+      
+      const errorAlert = document.getElementById('error-alert');
+      const errorMessage = document.getElementById('error-message');
+      
+      errorAlert.classList.add('hidden');
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      try {
+        const user = await login(username, password);
+        showToast('Login realizado com sucesso! 🎉');
+        
+        // Wait a second and redirect
+        setTimeout(() => {
+          window.location.href = 'admin.html';
+        }, 1000);
+      } catch (error) {
+        errorMessage.innerText = error.message;
+        errorAlert.classList.remove('hidden');
+        showToast('Erro: ' + error.message);
+      }
+    }
+  </script>
+</body>
+</html>
