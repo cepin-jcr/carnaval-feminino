@@ -102,13 +102,13 @@
           href="admin-block-form.html"
           class="bg-primary hover:bg-primary/95 text-white font-bold py-2 px-4 rounded-lg text-sm transition-all duration-300 shadow-sm"
         >
-          ➕ Adicionar Bloco
+           Adicionar Bloco
         </a>
         <a 
           href="admin-event-form.html"
           class="bg-gradient-secondary text-white font-bold py-2 px-4 rounded-lg text-sm transition-all duration-300 shadow-sm hover:scale-[1.01]"
         >
-          ➕ Adicionar Evento
+           Adicionar Evento
         </a>
       </div>
     </div>
@@ -121,7 +121,7 @@
           <p class="text-xs font-bold text-muted-foreground uppercase tracking-wider">Meus Blocos Cadastrados</p>
           <h3 id="stat-blocks-count" class="text-3xl font-extrabold mt-1">0</h3>
         </div>
-        <div class="text-3xl p-3 bg-primary/10 rounded-xl">🌸</div>
+        <div class="text-3xl p-3 bg-primary/10 rounded-xl"></div>
       </div>
       
       <!-- Events count stat -->
@@ -130,7 +130,7 @@
           <p class="text-xs font-bold text-muted-foreground uppercase tracking-wider">Eventos Marcados</p>
           <h3 id="stat-events-count" class="text-3xl font-extrabold mt-1">0</h3>
         </div>
-        <div class="text-3xl p-3 bg-secondary/10 rounded-xl">📅</div>
+        <div class="text-3xl p-3 bg-secondary/10 rounded-xl"></div>
       </div>
 
       <!-- User Role stat -->
@@ -139,7 +139,7 @@
           <p class="text-xs font-bold text-muted-foreground uppercase tracking-wider">Tipo de Acesso</p>
           <h3 id="stat-user-role" class="text-xl font-extrabold mt-1 text-primary">Administrador</h3>
         </div>
-        <div class="text-3xl p-3 bg-amber-500/10 rounded-xl">🔑</div>
+        <div class="text-3xl p-3 bg-amber-500/10 rounded-xl"></div>
       </div>
     </div>
 
@@ -151,14 +151,14 @@
           onclick="switchTab('blocks')"
           class="pb-3 text-sm font-bold border-b-2 border-primary text-primary transition-smooth focus:outline-none"
         >
-          🌸 Gerenciar Blocos
+           Gerenciar Blocos
         </button>
         <button 
           id="tab-events-btn"
           onclick="switchTab('events')"
           class="pb-3 text-sm font-bold border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-smooth focus:outline-none"
         >
-          📅 Gerenciar Eventos
+           Gerenciar Eventos
         </button>
         
         <button 
@@ -166,21 +166,21 @@
           onclick="switchTab('cepin')"
           class="pb-3 text-sm font-bold border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-smooth focus:outline-none hidden"
         >
-          ⚙️ Editar CEPIN
+           Editar CEPIN
         </button>
         <button 
           id="tab-users-btn"
           onclick="switchTab('users')"
           class="pb-3 text-sm font-bold border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-smooth focus:outline-none hidden"
         >
-          👥 Aprovar Usuários
+           Aprovar Usuários
         </button>
         <button 
           id="tab-settings-btn"
           onclick="switchTab('settings')"
           class="pb-3 text-sm font-bold border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-smooth focus:outline-none hidden"
         >
-          🔧 Configurações
+           Configurações
         </button>
 
       </div>
@@ -307,7 +307,7 @@
         <form id="cepin-form" onsubmit="handleCepinFormSubmit(event)" class="p-6 space-y-6">
           <!-- Localização, Contato e Rodapé -->
           <div class="space-y-4">
-            <h4 class="text-sm font-bold text-primary border-b border-border pb-1">📍 Rodapé & Contatos</h4>
+            <h4 class="text-sm font-bold text-primary border-b border-border pb-1"> Rodapé & Contatos</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label for="cepin-endereco" class="block text-xs font-bold uppercase text-muted-foreground mb-1 text-[10px] tracking-wider font-bold">Endereço Completo</label>
@@ -322,7 +322,7 @@
 
           <!-- Redes Sociais -->
           <div class="space-y-4">
-            <h4 class="text-sm font-bold text-primary border-b border-border pb-1">📱 Redes Sociais</h4>
+            <h4 class="text-sm font-bold text-primary border-b border-border pb-1"> Redes Sociais</h4>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label for="cepin-instagram" class="block text-xs font-bold uppercase text-muted-foreground mb-1 text-[10px] tracking-wider font-bold">Instagram Handle</label>
@@ -341,7 +341,7 @@
 
           <!-- Apresentação -->
           <div class="space-y-4">
-            <h4 class="text-sm font-bold text-primary border-b border-border pb-1">💡 Apresentação</h4>
+            <h4 class="text-sm font-bold text-primary border-b border-border pb-1"> Apresentação</h4>
             <div class="grid grid-cols-1 gap-4">
               <div>
                 <label for="cepin-apresentacao-titulo" class="block text-xs font-bold uppercase text-muted-foreground mb-1 text-[10px] tracking-wider font-bold">Título Principal</label>
@@ -360,7 +360,7 @@
 
           <!-- Competências -->
           <div class="space-y-4">
-            <h4 class="text-sm font-bold text-primary border-b border-border pb-1">📋 Competências (Uma por linha)</h4>
+            <h4 class="text-sm font-bold text-primary border-b border-border pb-1"> Competências (Uma por linha)</h4>
             <div>
               <label for="cepin-competencias" class="block text-xs font-bold uppercase text-muted-foreground mb-1 text-[10px] tracking-wider font-bold">Competências do Centro</label>
               <textarea id="cepin-competencias" rows="8" placeholder="Digite uma competência por linha..." class="w-full px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth"></textarea>
@@ -369,7 +369,7 @@
 
           <!-- Potenciais Parceiros -->
           <div class="space-y-4">
-            <h4 class="text-sm font-bold text-primary border-b border-border pb-1">🤝 Potenciais Parceiros</h4>
+            <h4 class="text-sm font-bold text-primary border-b border-border pb-1"> Potenciais Parceiros</h4>
             <div>
               <label for="cepin-parceiros-texto" class="block text-xs font-bold uppercase text-muted-foreground mb-1 text-[10px] tracking-wider font-bold">Descrição</label>
               <textarea id="cepin-parceiros-texto" rows="3" required class="w-full px-3 py-2 border border-input rounded-lg bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth"></textarea>
@@ -379,7 +379,7 @@
           <!-- Projetos -->
           <div class="space-y-4">
             <div class="flex justify-between items-center border-b border-border pb-1">
-              <h4 class="text-sm font-bold text-primary">🚀 Projetos</h4>
+              <h4 class="text-sm font-bold text-primary"> Projetos</h4>
               <button type="button" onclick="addProjectRow()" class="text-xs bg-primary/10 text-primary font-bold py-1 px-3.5 rounded-lg border border-primary/20 hover:bg-primary/20 transition-smooth">+ Adicionar Projeto</button>
             </div>
             <div id="cepin-projetos-container" class="space-y-4">
@@ -390,7 +390,7 @@
           <!-- Equipe -->
           <div class="space-y-4">
             <div class="flex justify-between items-center border-b border-border pb-1">
-              <h4 class="text-sm font-bold text-primary">👥 Equipe de Pesquisadores</h4>
+              <h4 class="text-sm font-bold text-primary"> Equipe de Pesquisadores</h4>
               <button type="button" onclick="addMemberRow()" class="text-xs bg-primary/10 text-primary font-bold py-1 px-3.5 rounded-lg border border-primary/20 hover:bg-primary/20 transition-smooth">+ Adicionar Membro</button>
             </div>
             <div>
@@ -418,7 +418,7 @@
           <!-- Colaboradores -->
           <div class="space-y-4">
             <div class="flex justify-between items-center border-b border-border pb-1">
-              <h4 class="text-sm font-bold text-primary">🤝 Colaboradores</h4>
+              <h4 class="text-sm font-bold text-primary"> Colaboradores</h4>
               <button type="button" onclick="addCollaboratorRow()" class="text-xs bg-primary/10 text-primary font-bold py-1 px-3.5 rounded-lg border border-primary/20 hover:bg-primary/20 transition-smooth">+ Adicionar Colaborador</button>
             </div>
             <div class="overflow-x-auto rounded-xl border border-border/50">
@@ -441,7 +441,7 @@
           <!-- Desenvolvedores -->
           <div class="space-y-4">
             <div class="flex justify-between items-center border-b border-border pb-1">
-              <h4 class="text-sm font-bold text-primary">💻 Desenvolvedores</h4>
+              <h4 class="text-sm font-bold text-primary"> Desenvolvedores</h4>
               <button type="button" onclick="addDeveloperRow()" class="text-xs bg-primary/10 text-primary font-bold py-1 px-3.5 rounded-lg border border-primary/20 hover:bg-primary/20 transition-smooth">+ Adicionar Desenvolvedor</button>
             </div>
             <div class="overflow-x-auto rounded-xl border border-border/50">
@@ -464,7 +464,7 @@
           <!-- Form Submit Button -->
           <div class="flex justify-end pt-4 border-t border-border/50">
             <button type="submit" class="bg-primary hover:bg-primary/95 hover:shadow-glow text-white font-extrabold py-3 px-8 rounded-lg text-sm transition-all duration-300 shadow-sm">
-              💾 Salvar Alterações do CEPIN
+               Salvar Alterações do CEPIN
             </button>
           </div>
         </form>
@@ -486,7 +486,7 @@
     window.addEventListener('load', () => {
       currentUser = getCurrentUser();
       if (!currentUser) {
-        showToast('Acesso restrito. Faça login primeiro! ⚠️');
+        showToast('Acesso restrito. Faça login primeiro! ');
         setTimeout(() => {
           window.location.href = 'login.html';
         }, 800);
@@ -823,7 +823,7 @@
       };
       
       await saveCepinData(updatedData);
-      showToast('Informações do CEPIN salvas com sucesso! 🎉');
+      showToast('Informações do CEPIN salvas com sucesso! ');
       
       // Dispatch sync event locally so other components reload
       window.dispatchEvent(new CustomEvent('cepinSyncComplete'));
@@ -916,7 +916,7 @@
             <a href="bloco.html?id=${ev.blocoId}" target="_blank" class="hover:underline">${blockName}</a>
           </td>
           <td class="p-4 text-xs text-muted-foreground">
-            📅 ${dateStr}<br>🕒 ${ev.horario || 'a combinar'}
+             ${dateStr}<br> ${ev.horario || 'a combinar'}
           </td>
           <td class="p-4 text-muted-foreground text-xs truncate max-w-[120px]">
             ${ev.local || 'Não definido'}
@@ -939,7 +939,7 @@
       const blockName = blocks.find(b => b.id === id)?.nome || 'este bloco';
       if (confirm(`Tem certeza de que deseja excluir "${blockName}"? Esta ação excluirá também todos os eventos associados a ele.`)) {
         await deleteBlock(id);
-        showToast('Bloco excluído com sucesso! 🗑️');
+        showToast('Bloco excluído com sucesso! ');
         loadDashboardData();
       }
     }
@@ -947,7 +947,7 @@
     async function handleDeleteEvent(id) {
       if (confirm(`Tem certeza de que deseja excluir este evento?`)) {
         await deleteEvent(id);
-        showToast('Evento excluído com sucesso! 🗑️');
+        showToast('Evento excluído com sucesso! ');
         loadDashboardData();
       }
     }
@@ -986,7 +986,7 @@
       if (error) {
         showToast('Erro ao aprovar: ' + error.message);
       } else {
-        showToast('Usuário aprovado com sucesso! ✅');
+        showToast('Usuário aprovado com sucesso! ');
         loadUsersTable();
       }
     }
@@ -1008,7 +1008,7 @@
       if (config) {
         const { error } = await supabase.from('configuracoes').update({ notification_email: email }).eq('id', config.id);
         if (error) showToast('Erro: ' + error.message);
-        else showToast('Configurações salvas! ✅');
+        else showToast('Configurações salvas! ');
       }
     }
     

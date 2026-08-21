@@ -204,7 +204,7 @@
 
       <!-- No blocks found template -->
       <div id="no-blocks-found" class="hidden text-center py-16 rounded-xl border border-dashed border-border bg-card/30">
-        <div class="text-5xl mb-4">🔍</div>
+        <div class="text-5xl mb-4"></div>
         <h3 class="text-xl font-bold mb-2">Nenhum bloco encontrado</h3>
         <p class="text-muted-foreground max-w-sm mx-auto">
           Tente ajustar seus termos de busca ou filtros para encontrar outros blocos.
@@ -236,11 +236,10 @@
     // Initialize Leaflet Map
     function initMap() {
       // Create map centered in Brazil
-      map = L.map('map-container').setView([-14.235, -51.9253], 4);
+      map = L.map('map-container', { attributionControl: false }).setView([-14.235, -51.9253], 4);
 
       // Add OpenStreetMap tile layer
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors',
         maxZoom: 19
       }).addTo(map);
 
@@ -291,9 +290,9 @@
             <h3 class="font-extrabold text-sm mb-1 text-primary">${block.nome}</h3>
             ${block.descricao ? `<p class="text-xs text-muted-foreground mb-2 line-clamp-2">${block.descricao}</p>` : ''}
             <div class="space-y-0.5 text-xs">
-              <p><strong>📍</strong> ${block.cidade || ''}, ${block.estado || ''}</p>
-              ${block.formacao ? `<p><strong>👥</strong> ${block.formacao}</p>` : ''}
-              ${block.contato ? `<p class="text-ellipsis overflow-hidden whitespace-nowrap"><strong>📧</strong> ${block.contato}</p>` : ''}
+              <p><strong></strong> ${block.cidade || ''}, ${block.estado || ''}</p>
+              ${block.formacao ? `<p><strong></strong> ${block.formacao}</p>` : ''}
+              ${block.contato ? `<p class="text-ellipsis overflow-hidden whitespace-nowrap"><strong></strong> ${block.contato}</p>` : ''}
             </div>
             <div class="mt-2 pt-2 border-t border-border flex justify-center">
               <a href="bloco.html?id=${block.id}" class="text-xs text-primary font-bold hover:underline">Ver perfil completo</a>
@@ -422,10 +421,10 @@
           const redes = block.redesSociais;
           if (redes.instagram) {
             const handle = redes.instagram.replace('@', '');
-            socialLinksHtml += `<a href="https://instagram.com/${handle}" target="_blank" class="text-xs text-primary font-semibold hover:underline block truncate">📸 ${redes.instagram}</a>`;
+            socialLinksHtml += `<a href="https://instagram.com/${handle}" target="_blank" class="text-xs text-primary font-semibold hover:underline block truncate"> ${redes.instagram}</a>`;
           }
           if (redes.facebook) {
-            socialLinksHtml += `<span class="text-xs text-muted-foreground block truncate">👥 ${redes.facebook}</span>`;
+            socialLinksHtml += `<span class="text-xs text-muted-foreground block truncate"> ${redes.facebook}</span>`;
           }
         }
 
@@ -457,11 +456,11 @@
             <div class="space-y-3">
               <div class="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
                 <div class="flex items-center gap-1.5 min-w-0">
-                  <span>📍</span>
+                  <span></span>
                   <span class="truncate font-medium">${block.cidade || 'Não informada'}</span>
                 </div>
                 <div class="flex items-center gap-1.5 min-w-0">
-                  <span>👥</span>
+                  <span></span>
                   <span class="truncate font-medium">${block.formacao || 'Mista'}</span>
                 </div>
               </div>
@@ -472,7 +471,7 @@
                 </span>
                 ${block.cache ? `
                   <div class="inline-block text-[11px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 py-0.5 px-2 rounded border border-amber-500/20">
-                    💰 Cachê: ${block.cache}
+                     Cachê: ${block.cache}
                   </div>
                 ` : ''}
               </div>
@@ -496,7 +495,7 @@
                   class="px-3 border border-input hover:bg-muted text-foreground py-2 rounded-lg transition-smooth"
                   title="Ver no mapa"
                 >
-                  📍
+                  
                 </button>
               </div>
               
@@ -504,7 +503,7 @@
                 href="mailto:${block.contato}" 
                 class="w-full flex items-center gap-2 border-t border-border/40 pt-2 text-[11px] text-muted-foreground hover:text-primary transition-smooth"
               >
-                ✉️ <span class="truncate">${block.contato || 'Sem email cadastrado'}</span>
+                 <span class="truncate">${block.contato || 'Sem email cadastrado'}</span>
               </a>
             </div>
           </div>

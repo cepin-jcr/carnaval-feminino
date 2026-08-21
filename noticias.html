@@ -147,8 +147,8 @@
       </div>
       <h3 id="read-title" class="text-2xl font-extrabold mb-2 text-foreground">Título da Notícia</h3>
       <div class="flex items-center gap-4 text-xs text-muted-foreground mb-4">
-        <span id="read-date">📅 Data</span>
-        <span id="read-author">👤 Autor</span>
+        <span id="read-date"> Data</span>
+        <span id="read-author"> Autor</span>
       </div>
       <div class="w-full aspect-video rounded-lg overflow-hidden mb-4 border border-border">
         <img id="read-image" src="assets/images/placeholder.svg" alt="Imagem" class="w-full h-full object-cover">
@@ -171,13 +171,13 @@
       </div>
       <div class="space-y-3">
         <button onclick="shareWhatsApp()" class="w-full flex items-center gap-2 border border-input hover:bg-muted p-2.5 rounded-lg text-sm transition-smooth font-medium text-left">
-          <span>💬</span> Compartilhar no WhatsApp
+          <span></span> Compartilhar no WhatsApp
         </button>
         <button onclick="shareEmail()" class="w-full flex items-center gap-2 border border-input hover:bg-muted p-2.5 rounded-lg text-sm transition-smooth font-medium text-left">
-          <span>✉️</span> Compartilhar por Email
+          <span></span> Compartilhar por Email
         </button>
         <button onclick="copyPageLink()" class="w-full flex items-center gap-2 border border-input hover:bg-muted p-2.5 rounded-lg text-sm transition-smooth font-medium text-left">
-          <span>📋</span> Copiar Link da Notícia
+          <span></span> Copiar Link da Notícia
         </button>
       </div>
     </div>
@@ -223,8 +223,8 @@
       if (id === 'read-news-modal' && selectedNews) {
         document.getElementById('read-category').innerText = selectedNews.categoria;
         document.getElementById('read-title').innerText = selectedNews.titulo;
-        document.getElementById('read-date').innerText = `📅 ${formatDate(selectedNews.data)}`;
-        document.getElementById('read-author').innerText = `👤 ${selectedNews.autor}`;
+        document.getElementById('read-date').innerText = ` ${formatDate(selectedNews.data)}`;
+        document.getElementById('read-author').innerText = ` ${selectedNews.autor}`;
         document.getElementById('read-image').src = selectedNews.imagem;
         document.getElementById('read-content').innerText = selectedNews.conteudo;
       }
@@ -399,10 +399,10 @@
       const idx = likes.indexOf(newsId);
       if (idx >= 0) {
         likes.splice(idx, 1);
-        showToast('Removido de favoritos 💔');
+        showToast('Removido de favoritos ');
       } else {
         likes.push(newsId);
-        showToast('Adicionado aos favoritos ❤️');
+        showToast('Adicionado aos favoritos ');
       }
       localStorage.setItem('bf_news_likes', JSON.stringify(likes));
       renderNews();
@@ -414,11 +414,11 @@
       const email = emailInput.value.trim();
       
       if (!email || !email.includes('@')) {
-        showToast('Por favor, informe um e-mail válido! ⚠️');
+        showToast('Por favor, informe um e-mail válido! ');
         return;
       }
 
-      showToast('Cadastro realizado com sucesso! Bem-vinda(o) à newsletter. 🎉');
+      showToast('Cadastro realizado com sucesso! Bem-vinda(o) à newsletter. ');
       emailInput.value = '';
     }
 
@@ -426,7 +426,7 @@
     function submitComment() {
       const text = document.getElementById('comment-text').value.trim();
       if (!text) {
-        showToast('Escreva seu comentário antes de publicar! ⚠️');
+        showToast('Escreva seu comentário antes de publicar! ');
         return;
       }
       
@@ -440,7 +440,7 @@
       localStorage.setItem(`bf_news_comments_${selectedNews.id}`, JSON.stringify(comments));
 
       closeModal('comment-news-modal');
-      showToast('Comentário publicado com sucesso! 🎉');
+      showToast('Comentário publicado com sucesso! ');
     }
 
     // Social shares
@@ -460,7 +460,7 @@
 
     function copyPageLink() {
       navigator.clipboard.writeText(window.location.href);
-      showToast('Link copiado para a área de transferência! 📋');
+      showToast('Link copiado para a área de transferência! ');
       closeModal('share-news-modal');
     }
 

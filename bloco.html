@@ -98,7 +98,7 @@
       href="index.html" 
       class="mb-6 inline-flex items-center gap-2 text-sm font-semibold hover:text-primary transition-smooth py-2 px-3 hover:bg-muted rounded-lg"
     >
-      ⬅️ Voltar ao mapa
+       Voltar ao mapa
     </a>
     
     <!-- NotFound Container (Hidden by default) -->
@@ -132,7 +132,7 @@
                 Carregando...
               </h1>
               <div class="flex items-center gap-2 text-white/90">
-                <span>📍</span>
+                <span></span>
                 <span id="block-location" class="text-base md:text-lg font-medium drop-shadow">Cidade - Estado</span>
               </div>
             </div>
@@ -142,7 +142,7 @@
         <!-- About Section Card -->
         <div class="rounded-xl border border-border bg-card text-card-foreground p-6 shadow-soft">
           <h2 class="text-xl font-bold flex items-center gap-2 mb-4 border-b border-border/50 pb-3">
-            ❤️ Sobre o Bloco
+             Sobre o Bloco
           </h2>
           <div class="space-y-4">
             <p id="block-description" class="text-muted-foreground leading-relaxed">
@@ -160,7 +160,7 @@
             <div id="block-music-container" class="hidden">
               <div class="h-[1px] bg-border/50 my-4"></div>
               <h3 class="font-semibold mb-2 flex items-center gap-2">
-                🎵 Estilo Musical
+                 Estilo Musical
               </h3>
               <p id="block-music" class="text-muted-foreground leading-relaxed">
                 Estilo de música...
@@ -171,7 +171,7 @@
 
         <!-- Photo Gallery Carousel Card -->
         <div id="gallery-card" class="rounded-xl border border-border bg-card p-6 shadow-soft">
-          <h2 class="text-xl font-bold mb-4 border-b border-border/50 pb-3">📸 Galeria de Fotos</h2>
+          <h2 class="text-xl font-bold mb-4 border-b border-border/50 pb-3"> Galeria de Fotos</h2>
           
           <div class="space-y-4">
             <!-- Main Display Image -->
@@ -186,13 +186,13 @@
                 onclick="prevGalleryImage()"
                 class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white w-9 h-9 flex items-center justify-center rounded-full transition-all"
               >
-                ◀
+                
               </button>
               <button
                 onclick="nextGalleryImage()"
                 class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white w-9 h-9 flex items-center justify-center rounded-full transition-all"
               >
-                ▶
+                
               </button>
               <div id="gallery-counter" class="absolute bottom-3 right-3 bg-black/60 text-white px-3 py-1 rounded-full text-xs font-semibold">
                 1 / 1
@@ -207,7 +207,7 @@
 
         <!-- Videos Section Card -->
         <div id="videos-card" class="rounded-xl border border-border bg-card p-6 shadow-soft hidden">
-          <h2 class="text-xl font-bold mb-4 border-b border-border/50 pb-3">🎥 Vídeos</h2>
+          <h2 class="text-xl font-bold mb-4 border-b border-border/50 pb-3"> Vídeos</h2>
           <div id="videos-container" class="space-y-4">
             <!-- Embedded Videos -->
           </div>
@@ -215,19 +215,19 @@
 
         <!-- Location Map Card -->
         <div class="rounded-xl border border-border bg-card p-6 shadow-soft">
-          <h2 class="text-xl font-bold mb-4 border-b border-border/50 pb-3">🗺️ Localização no Mapa</h2>
+          <h2 class="text-xl font-bold mb-4 border-b border-border/50 pb-3"> Localização no Mapa</h2>
           <div class="w-full h-64 md:h-80 rounded-lg overflow-hidden border border-border z-0">
             <div id="mini-map" class="w-full h-full"></div>
           </div>
           <p id="block-address" class="text-sm text-muted-foreground mt-3 flex items-center gap-1.5">
-            📍 Endereço não informado.
+             Endereço não informado.
           </p>
         </div>
 
         <!-- Block Upcoming Events -->
         <div id="block-events-card" class="rounded-xl border border-border bg-card p-6 shadow-soft hidden">
           <h2 class="text-xl font-bold flex items-center gap-2 mb-4 border-b border-border/50 pb-3">
-            📅 Próximos Eventos deste Bloco
+             Próximos Eventos deste Bloco
           </h2>
           <div id="block-events-list" class="space-y-4">
             <!-- List of events rendered dynamically -->
@@ -245,7 +245,7 @@
           
           <div class="space-y-4">
             <div id="block-sidebar-responsavel-container" class="flex items-center gap-3 hidden">
-              <div class="text-xl">👩‍💼</div>
+              <div class="text-xl"></div>
               <div>
                 <p class="font-semibold text-sm">Responsável</p>
                 <p id="block-sidebar-responsavel" class="text-xs text-muted-foreground">Carregando...</p>
@@ -253,7 +253,7 @@
             </div>
 
             <div class="flex items-center gap-3">
-              <div class="text-xl">👥</div>
+              <div class="text-xl"></div>
               <div>
                 <p class="font-semibold text-sm">Formação</p>
                 <p id="block-sidebar-formacao" class="text-xs text-muted-foreground">Carregando...</p>
@@ -261,7 +261,7 @@
             </div>
             
             <div class="flex items-center gap-3">
-              <div class="text-xl">✉️</div>
+              <div class="text-xl"></div>
               <div>
                 <p class="font-semibold text-sm">Contato</p>
                 <p id="block-sidebar-contato" class="text-xs text-muted-foreground text-ellipsis overflow-hidden max-w-[200px]">Carregando...</p>
@@ -269,7 +269,7 @@
             </div>
             
             <div id="block-sidebar-cache-container" class="flex items-center gap-3 hidden">
-              <div class="text-xl">💰</div>
+              <div class="text-xl"></div>
               <div>
                 <p class="font-semibold text-sm">Cachê</p>
                 <p id="block-sidebar-cache" class="text-xs text-muted-foreground">Carregando...</p>
@@ -277,7 +277,7 @@
             </div>
             
             <div id="block-sidebar-dias-container" class="flex items-start gap-3 hidden">
-              <div class="text-xl">📅</div>
+              <div class="text-xl"></div>
               <div>
                 <p class="font-semibold text-sm">Dias de Desfile</p>
                 <p id="block-sidebar-dias" class="text-xs text-muted-foreground">Carregando...</p>
@@ -285,7 +285,7 @@
             </div>
             
             <div id="block-sidebar-atividades-container" class="flex items-start gap-3 hidden">
-              <div class="text-xl">🌸</div>
+              <div class="text-xl"></div>
               <div>
                 <p class="font-semibold text-sm">Atividades Realizadas</p>
                 <div id="block-sidebar-atividades" class="text-xs text-muted-foreground space-y-1 mt-1">
@@ -321,7 +321,7 @@
                 class="border border-input hover:bg-muted text-foreground p-2 rounded-lg transition-smooth flex items-center justify-center"
                 title="Favoritar"
               >
-                🖤
+                
               </button>
             </div>
 
@@ -336,19 +336,19 @@
               onclick="openModal('schedule-modal')"
               class="w-full bg-gradient-secondary text-white font-bold py-2.5 px-4 rounded-lg text-sm transition-all duration-300 hover:shadow-md hover:scale-[1.01]"
             >
-              📅 Agendar Apresentação
+               Agendar Apresentação
             </button>
             <button 
               onclick="openModal('share-modal')"
               class="w-full border border-input hover:bg-muted text-foreground font-semibold py-2.5 px-4 rounded-lg text-sm transition-smooth"
             >
-              🔗 Compartilhar Perfil
+               Compartilhar Perfil
             </button>
             <button 
               onclick="openModal('report-modal')"
               class="w-full border border-input hover:bg-muted text-foreground font-semibold py-2.5 px-4 rounded-lg text-sm transition-smooth"
             >
-              ⚠️ Reportar Problema
+               Reportar Problema
             </button>
           </div>
         </div>
@@ -430,13 +430,13 @@
       </div>
       <div class="space-y-3">
         <button onclick="shareWhatsApp()" class="w-full flex items-center gap-2 border border-input hover:bg-muted p-2.5 rounded-lg text-sm transition-smooth font-medium text-left">
-          <span>💬</span> Compartilhar no WhatsApp
+          <span></span> Compartilhar no WhatsApp
         </button>
         <button onclick="shareEmail()" class="w-full flex items-center gap-2 border border-input hover:bg-muted p-2.5 rounded-lg text-sm transition-smooth font-medium text-left">
-          <span>✉️</span> Compartilhar por Email
+          <span></span> Compartilhar por Email
         </button>
         <button onclick="copyPageLink()" class="w-full flex items-center gap-2 border border-input hover:bg-muted p-2.5 rounded-lg text-sm transition-smooth font-medium text-left">
-          <span>📋</span> Copiar Link do Perfil
+          <span></span> Copiar Link do Perfil
         </button>
       </div>
     </div>
@@ -566,9 +566,9 @@
 
       // Address text
       if (block.endereco) {
-        document.getElementById('block-address').innerHTML = `📍 <strong>Endereço:</strong> ${block.endereco}`;
+        document.getElementById('block-address').innerHTML = ` <strong>Endereço:</strong> ${block.endereco}`;
       } else if (block.cidade) {
-        document.getElementById('block-address').innerHTML = `📍 <strong>Atua em:</strong> ${block.cidade}, ${block.estado}`;
+        document.getElementById('block-address').innerHTML = ` <strong>Atua em:</strong> ${block.cidade}, ${block.estado}`;
       }
 
       // Social networks
@@ -580,19 +580,19 @@
           const handle = redes.instagram.replace('@', '');
           socialsBox.innerHTML += `
             <a href="https://instagram.com/${handle}" target="_blank" class="flex items-center gap-2 text-sm text-primary hover:underline font-semibold">
-              📸 Instagram: ${redes.instagram}
+               Instagram: ${redes.instagram}
             </a>`;
         }
         if (redes.facebook) {
           socialsBox.innerHTML += `
             <span class="flex items-center gap-2 text-sm text-muted-foreground font-semibold">
-              👥 Facebook: ${redes.facebook}
+               Facebook: ${redes.facebook}
             </span>`;
         }
         if (redes.youtube) {
           socialsBox.innerHTML += `
             <span class="flex items-center gap-2 text-sm text-muted-foreground font-semibold">
-              🎥 YouTube: ${redes.youtube}
+               YouTube: ${redes.youtube}
             </span>`;
         }
       }
@@ -600,7 +600,7 @@
       // Favorite button color sync
       const favorites = JSON.parse(localStorage.getItem('bf_favorites') || '[]');
       if (favorites.includes(blockId)) {
-        document.getElementById('btn-favorite').innerText = '❤️';
+        document.getElementById('btn-favorite').innerText = '';
       }
 
       // Image Gallery Setup
@@ -636,13 +636,13 @@
           const emailPart = block.contato.split('|').map(s => s.trim()).find(s => s.includes('@'));
           if (emailPart) {
             window.location.href = `mailto:${emailPart}`;
-            showToast('Abrindo gerenciador de e-mail... 📧');
+            showToast('Abrindo gerenciador de e-mail... ');
           } else {
             // Find numbers
             const numPart = block.contato.replace(/\D/g, '');
             if (numPart.length >= 10) {
               window.open(`https://wa.me/${numPart}`, '_blank');
-              showToast('Abrindo WhatsApp... 📱');
+              showToast('Abrindo WhatsApp... ');
             } else {
               showToast('Abrindo canal de contato: ' + block.contato);
             }
@@ -710,10 +710,10 @@
         miniMap.setView(coords, 14);
         return;
       }
-      miniMap = L.map('mini-map').setView(coords, 14);
+      miniMap = L.map('mini-map', { attributionControl: false }).setView(coords, 14);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
+        maxZoom: 19
       }).addTo(miniMap);
 
       const customIcon = L.icon({
@@ -754,11 +754,11 @@
           <div class="flex-grow min-w-0">
             <div class="flex flex-wrap items-center gap-2 mb-1">
               <span class="text-[10px] font-bold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded">${ev.tipo}</span>
-              <span class="text-xs text-muted-foreground">🕒 ${ev.horario || 'Horário a combinar'}</span>
+              <span class="text-xs text-muted-foreground"> ${ev.horario || 'Horário a combinar'}</span>
             </div>
             <h4 class="font-bold text-sm text-foreground truncate">${ev.nome}</h4>
             <p class="text-xs text-muted-foreground line-clamp-2 mt-1 leading-relaxed">${ev.descricao || 'Sem descrição.'}</p>
-            <p class="text-xs text-primary font-medium mt-1.5 flex items-center gap-1">📍 ${ev.local || 'Não definido'}</p>
+            <p class="text-xs text-primary font-medium mt-1.5 flex items-center gap-1"> ${ev.local || 'Não definido'}</p>
           </div>
         `;
         eventsList.appendChild(item);
@@ -773,13 +773,13 @@
       if (index >= 0) {
         // Unfavorite
         favorites.splice(index, 1);
-        document.getElementById('btn-favorite').innerText = '🖤';
-        showToast('Removido dos favoritos 💔');
+        document.getElementById('btn-favorite').innerText = '';
+        showToast('Removido dos favoritos ');
       } else {
         // Favorite
         favorites.push(blockId);
-        document.getElementById('btn-favorite').innerText = '❤️';
-        showToast('Adicionado aos favoritos ❤️');
+        document.getElementById('btn-favorite').innerText = '';
+        showToast('Adicionado aos favoritos ');
       }
       localStorage.setItem('bf_favorites', JSON.stringify(favorites));
     }
@@ -796,7 +796,7 @@
       const details = document.getElementById('schedule-details').value;
 
       if (!date || !loc) {
-        showToast('Preencha pelo menos a data e o local! ⚠️');
+        showToast('Preencha pelo menos a data e o local! ');
         return;
       }
 
@@ -806,7 +806,7 @@
       window.location.href = `mailto:${block.contato.split('|')[0]}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       
       closeModal('schedule-modal');
-      showToast('Solicitação de agendamento aberta no e-mail! 📧');
+      showToast('Solicitação de agendamento aberta no e-mail! ');
     }
 
     function submitReport() {
@@ -814,7 +814,7 @@
       const desc = document.getElementById('report-desc').value;
 
       if (!desc) {
-        showToast('Descreva o problema encontrado! ⚠️');
+        showToast('Descreva o problema encontrado! ');
         return;
       }
 
@@ -824,7 +824,7 @@
       window.location.href = `mailto:suporte@blocosfeministas.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
       closeModal('report-modal');
-      showToast('Relatório de erro preparado no e-mail! 📧');
+      showToast('Relatório de erro preparado no e-mail! ');
     }
 
     // Social shares
@@ -844,7 +844,7 @@
 
     function copyPageLink() {
       navigator.clipboard.writeText(window.location.href);
-      showToast('Link copiado para a área de transferência! 📋');
+      showToast('Link copiado para a área de transferência! ');
       closeModal('share-modal');
     }
 

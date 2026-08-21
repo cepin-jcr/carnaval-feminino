@@ -1249,7 +1249,7 @@ async function logout() {
   } catch (e) {
     console.error('Error signing out from Supabase:', e);
   }
-  showToast('Sessão encerrada com sucesso! 👋');
+  showToast('Sessão encerrada com sucesso! ');
   setTimeout(() => {
     window.location.href = 'index.html';
   }, 1000);
@@ -1337,11 +1337,11 @@ function toggleTheme() {
   if (document.documentElement.classList.contains('dark')) {
     document.documentElement.classList.remove('dark');
     localStorage.setItem('theme', 'light');
-    showToast('Modo Claro ativado! ☀️');
+    showToast('Modo Claro ativado! ');
   } else {
     document.documentElement.classList.add('dark');
     localStorage.setItem('theme', 'dark');
-    showToast('Modo Escuro ativado! 🌙');
+    showToast('Modo Escuro ativado! ');
   }
 }
 
@@ -1357,15 +1357,15 @@ function showToast(message, type = 'info') {
   const toast = document.createElement('div');
   toast.className = 'toast';
   
-  let icon = '🔔';
+  let icon = '';
   if (message.includes('Erro') || message.includes('incorretos') || message.includes('inválido')) {
-    icon = '❌';
+    icon = '';
   } else if (message.includes('sucesso') || message.includes('enviado') || message.includes('salvo')) {
-    icon = '✅';
+    icon = '';
   } else if (message.includes('favoritos')) {
-    icon = '❤️';
+    icon = '';
   } else if (message.includes('WhatsApp') || message.includes('email')) {
-    icon = '📱';
+    icon = '';
   }
   
   toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
@@ -1686,15 +1686,20 @@ function renderFooter() {
           <!-- Column 1: Localização & Contato -->
           <div class="space-y-4">
             <h3 class="text-sm font-extrabold uppercase tracking-wider text-primary">Localização e Contato</h3>
-            <div class="space-y-2 text-sm text-muted-foreground leading-relaxed">
-              <div class="flex gap-2">
-                <span class="flex-shrink-0 text-base">📍</span>
-                <span><strong>Endereço:</strong> ${cepinData.endereco}</span>
+            <div class="space-y-3 text-sm text-muted-foreground leading-relaxed">
+              <div class="flex items-start gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>${cepinData.endereco || 'Endereço'}</span>
               </div>
-              <div class="flex gap-2">
-                <span class="flex-shrink-0 text-base">✉️</span>
-                <span><strong>Contato:</strong> <a href="mailto:${cepinData.email}" class="hover:text-primary transition-smooth">${cepinData.email}</a></span>
+              <div class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                <a href="mailto:${cepinData.email || 'email@exemplo.com'}" class="hover:text-primary transition-smooth">${cepinData.email || 'email@exemplo.com'}</a>
               </div>
+            </div>
+            
+            <div class="pt-2 flex flex-col gap-1">
+              <p class="text-xs text-muted-foreground">Nossa outra iniciativa:</p>
+              <a href="https://cepin-jcr.github.io/mapeamento-cultural/" target="_blank" rel="noopener noreferrer" class="text-green-700 dark:text-green-600 hover:underline font-extrabold text-sm transition-smooth">Mapeamento Cultural</a>
             </div>
           </div>
           
@@ -1708,7 +1713,7 @@ function renderFooter() {
                 href="cepin.html" 
                 class="relative bg-gradient-primary hover:scale-[1.03] active:scale-[0.98] text-white font-extrabold text-base py-4 px-8 rounded-full shadow-carnival transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer border-0"
               >
-                <span>🌸 Conheça o CEPIN</span>
+                <span> Conheça o CEPIN</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
               </a>
             </div>
@@ -1718,29 +1723,33 @@ function renderFooter() {
           </div>
           
           <!-- Column 3: Redes Sociais -->
-          <div class="space-y-3">
+          <div class="space-y-4">
             <h3 class="text-sm font-extrabold uppercase tracking-wider text-primary">Redes Sociais</h3>
-            <div class="flex flex-col gap-2 text-sm text-muted-foreground">
-              <a href="https://instagram.com/${cepinData.instagram.replace('@', '')}" target="_blank" class="flex items-center gap-2 hover:text-primary transition-smooth">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <div class="flex flex-col gap-3 text-sm text-muted-foreground">
+              <a href="https://instagram.com/${(cepinData.instagram || '').replace('@', '')}" target="_blank" class="flex items-center gap-2 hover:text-primary transition-smooth">
+                <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                 </svg>
-                <span>Instagram: ${cepinData.instagram}</span>
+                <span>Instagram: ${cepinData.instagram || ''}</span>
               </a>
-              <a href="#" target="_blank" class="flex items-center gap-2 hover:text-primary transition-smooth">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <a href="https://www.facebook.com/cepinjacarei/" target="_blank" class="flex items-center gap-2 hover:text-primary transition-smooth">
+                <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                 </svg>
-                <span>Facebook: ${cepinData.facebook}</span>
+                <span>Facebook: ${cepinData.facebook || ''}</span>
               </a>
-              <a href="#" target="_blank" class="flex items-center gap-2 hover:text-primary transition-smooth">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <a href="https://www.youtube.com/@cepinjcr" target="_blank" class="flex items-center gap-2 hover:text-primary transition-smooth">
+                <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
                   <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"></polygon>
                 </svg>
-                <span>YouTube: ${cepinData.youtube}</span>
+                <span>YouTube: ${cepinData.youtube || ''}</span>
+              </a>
+              <a href="https://www.linkedin.com/in/cepin-jcr-5538b923a" target="_blank" class="flex items-center gap-2 hover:text-primary transition-smooth">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 shrink-0"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                <span>LinkedIn</span>
               </a>
             </div>
           </div>

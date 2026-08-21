@@ -103,7 +103,7 @@
     <!-- Filters Card -->
     <div class="rounded-xl border border-border bg-card p-6 shadow-soft mb-8">
       <h3 class="font-bold flex items-center gap-2 mb-4">
-        <span>⚙️</span> Filtros de Categoria
+        <span></span> Filtros de Categoria
       </h3>
       <div id="category-filters" class="flex flex-wrap gap-2.5">
         <button onclick="setFilter('todos')" class="filter-btn bg-primary text-white font-semibold py-1.5 px-4 rounded-lg text-sm transition-smooth" data-type="todos">Todos</button>
@@ -121,7 +121,7 @@
     
     <!-- No Events Template -->
     <div id="no-events-found" class="hidden text-center py-16 rounded-xl border border-dashed border-border bg-card/30">
-      <div class="text-5xl mb-4">📅</div>
+      <div class="text-5xl mb-4"></div>
       <h3 class="text-xl font-bold mb-2">Nenhum evento encontrado</h3>
       <p class="text-muted-foreground max-w-sm mx-auto">
         Não há eventos agendados para a categoria selecionada no momento.
@@ -151,10 +151,10 @@
         
         <!-- Summary Info Box -->
         <div class="bg-muted/50 p-4 rounded-lg text-xs space-y-2 border border-border/40">
-          <p><strong>📋 Evento:</strong> <span id="summary-event-title">-</span></p>
-          <p><strong>📅 Data:</strong> <span id="summary-event-date">-</span></p>
-          <p><strong>⏰ Horário:</strong> <span id="summary-event-time">-</span></p>
-          <p><strong>📍 Local:</strong> <span id="summary-event-location">-</span></p>
+          <p><strong> Evento:</strong> <span id="summary-event-title">-</span></p>
+          <p><strong> Data:</strong> <span id="summary-event-date">-</span></p>
+          <p><strong> Horário:</strong> <span id="summary-event-time">-</span></p>
+          <p><strong> Local:</strong> <span id="summary-event-location">-</span></p>
         </div>
         
         <div class="flex gap-3 pt-2">
@@ -319,14 +319,14 @@
       const email = document.getElementById('participant-email').value.trim();
 
       if (!name || !email) {
-        showToast('Preencha o nome e o e-mail de contato! ⚠️');
+        showToast('Preencha o nome e o e-mail de contato! ');
         return;
       }
 
       // Find associated block
       const blockObj = blocksData.find(b => b.id === selectedEvent.blocoId);
       if (!blockObj || !blockObj.contato) {
-        showToast('Informações de contato do bloco não disponíveis. ⚠️');
+        showToast('Informações de contato do bloco não disponíveis. ');
         closeModal();
         return;
       }
@@ -358,12 +358,12 @@
         const body = `Olá!\n\nMeu nome é ${name} (e-mail: ${email}). Gostaria de confirmar minha participação no evento "${selectedEvent.nome}" agendado para o dia ${new Date(selectedEvent.data).toLocaleDateString('pt-BR')} às ${selectedEvent.horario || 'a combinar'}.\n\nAguardo confirmação.\nObrigado(a)!`;
         
         window.location.href = `mailto:${primaryEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        showToast('Inscrição preparada! Abrindo gerenciador de e-mail... 📧');
+        showToast('Inscrição preparada! Abrindo gerenciador de e-mail... ');
       } else if (primaryPhone) {
         // Open WhatsApp
         const waText = `Olá! Meu nome é ${name}. Gostaria de participar do evento "${selectedEvent.nome}" no dia ${new Date(selectedEvent.data).toLocaleDateString('pt-BR')}.`;
         window.open(`https://wa.me/${primaryPhone}?text=${encodeURIComponent(waText)}`, '_blank');
-        showToast('Inscrição preparada! Abrindo WhatsApp... 📱');
+        showToast('Inscrição preparada! Abrindo WhatsApp... ');
       } else {
         showToast('Nenhum canal direto de contato encontrado. Tente mandar uma mensagem manual para: ' + blockObj.contato);
       }

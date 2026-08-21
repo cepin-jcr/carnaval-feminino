@@ -197,13 +197,13 @@
       const confirmPassword = document.getElementById('confirm-password').value;
 
       if (password !== confirmPassword) {
-        showToast('Erro: As senhas informadas não coincidem! ⚠️');
+        showToast('Erro: As senhas informadas não coincidem! ');
         return;
       }
       
       try {
         const user = await register(email, password);
-        showToast('Conta criada com sucesso! Redirecionando... 🎉');
+        showToast('Conta criada com sucesso! Redirecionando... ');
         
         // Wait a second and redirect
         setTimeout(() => {

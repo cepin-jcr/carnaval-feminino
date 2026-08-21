@@ -101,7 +101,7 @@
         href="admin.html" 
         class="border border-input hover:bg-muted text-foreground font-semibold py-2 px-4 rounded-lg text-sm transition-smooth inline-flex items-center gap-1.5"
       >
-        ⬅️ Voltar
+         Voltar
       </a>
     </div>
 
@@ -232,13 +232,13 @@
         <!-- Localização coordenadas -->
         <div class="bg-muted/30 p-4 rounded-lg border border-border/40">
           <div class="flex justify-between items-center mb-3">
-            <span class="text-xs font-bold uppercase text-muted-foreground">📍 Coordenadas Geográficas</span>
+            <span class="text-xs font-bold uppercase text-muted-foreground"> Coordenadas Geográficas</span>
             <button 
               type="button" 
               onclick="autodetectCoordinates()"
               class="text-xs text-primary font-bold hover:underline"
             >
-              🔍 Buscar pelo endereço
+               Buscar pelo endereço
             </button>
           </div>
           <div class="grid grid-cols-2 gap-3">
@@ -403,7 +403,7 @@
       
       // Allow if admin or if the block belongs to the user
       if (!currentUser.isAdmin && blockToEdit.ownerId !== currentUser.id) {
-        showToast('Erro: Você não tem permissão para editar este bloco! ⚠️', 'error');
+        showToast('Erro: Você não tem permissão para editar este bloco! ', 'error');
         setTimeout(() => {
           window.location.href = 'admin.html';
         }, 1200);
@@ -526,7 +526,7 @@
       if (!file) return;
 
       if (file.size > 2 * 1024 * 1024) {
-        showToast('Erro: A foto excede o tamanho máximo de 2MB! ⚠️');
+        showToast('Erro: A foto excede o tamanho máximo de 2MB! ');
         input.value = '';
         return;
       }
@@ -550,11 +550,11 @@
       const state = document.getElementById('estado').value;
 
       if (!address && !city && !state) {
-        showToast('Erro: Preencha ao menos o endereço ou a cidade para buscar! ⚠️');
+        showToast('Erro: Preencha ao menos o endereço ou a cidade para buscar! ');
         return;
       }
 
-      showToast('Buscando coordenadas no mapa... 🗺️');
+      showToast('Buscando coordenadas no mapa... ');
 
       const query = [address, city, state].filter(Boolean).join(', ');
       const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`;
@@ -568,9 +568,9 @@
           const match = data[0];
           document.getElementById('localLat').value = Number(match.lat).toFixed(5);
           document.getElementById('localLng').value = Number(match.lon).toFixed(5);
-          showToast('Coordenadas encontradas e preenchidas! ✅');
+          showToast('Coordenadas encontradas e preenchidas! ');
         } else {
-          showToast('Coordenadas não encontradas. Verifique a grafia do endereço. ⚠️');
+          showToast('Coordenadas não encontradas. Verifique a grafia do endereço. ');
         }
       } catch (err) {
         showToast('Erro na requisição da busca de endereço.');
@@ -658,7 +658,7 @@
 
       try {
         await saveBlock(blockData);
-        showToast('Bloco salvo com sucesso! ✅');
+        showToast('Bloco salvo com sucesso! ');
         
         setTimeout(() => {
           window.location.href = 'admin.html';
