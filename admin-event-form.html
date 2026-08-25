@@ -285,7 +285,6 @@
     let base64Photo = '';
     let currentUser = null;
 
-    // Check auth guard and populate blocks select on load
     window.addEventListener('load', () => {
       currentUser = getCurrentUser();
       if (!currentUser) {
@@ -302,6 +301,14 @@
       if (editId) {
         eventToEdit = getEvent(editId);
         if (eventToEdit) {
+          const associatedBlock = getBlock(eventToEdit.blocoId);
+          if (!currentUser.isAdmin && (!associatedBlock || associatedBlock.ownerId !== currentUser.id)) {
+            showToast('Erro: Você não tem permissão para editar este evento! ', 'error');
+            setTimeout(() => {
+              window.location.href = 'admin.html';
+            }, 1200);
+            return;
+          }
           fillFormWithEvent(eventToEdit);
         }
       }

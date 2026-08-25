@@ -527,9 +527,13 @@
       if (currentUser.isAdmin) {
         document.getElementById('stat-user-role').innerText = 'Super Admin';
         document.getElementById('tab-cepin-btn')?.classList.remove('hidden');
+        document.getElementById('tab-users-btn')?.classList.remove('hidden');
+        document.getElementById('tab-settings-btn')?.classList.remove('hidden');
       } else {
         document.getElementById('stat-user-role').innerText = 'Usuário';
         document.getElementById('tab-cepin-btn')?.classList.add('hidden');
+        document.getElementById('tab-users-btn')?.classList.add('hidden');
+        document.getElementById('tab-settings-btn')?.classList.add('hidden');
       }
     }
 
@@ -584,33 +588,44 @@
       if (cepinTab) cepinTab.classList.add('hidden');
       if (usersTab) usersTab.classList.add('hidden');
       if (settingsTab) settingsTab.classList.add('hidden');
+      const activeClasses = ['border-primary', 'text-primary'];
+      const inactiveClasses = ['border-transparent', 'text-muted-foreground'];
       
-      const inactiveClass = "pb-3 text-sm font-bold border-b-2 border-transparent text-muted-foreground hover:text-foreground transition-smooth focus:outline-none";
-      const activeClass = "pb-3 text-sm font-bold border-b-2 border-primary text-primary transition-smooth focus:outline-none";
-      
-      blocksBtn.className = inactiveClass;
-      eventsBtn.className = inactiveClass;
-      if (cepinBtn) cepinBtn.className = inactiveClass;
-      if (usersBtn) usersBtn.className = inactiveClass;
-      if (settingsBtn) settingsBtn.className = inactiveClass;
+      const allBtns = [blocksBtn, eventsBtn, cepinBtn, usersBtn, settingsBtn];
+      allBtns.forEach(btn => {
+        if (!btn) return;
+        btn.classList.remove(...activeClasses);
+        btn.classList.add(...inactiveClasses);
+      });
 
       if (tab === 'blocks') {
         blocksTab.classList.remove('hidden');
-        blocksBtn.className = activeClass;
+        blocksBtn.classList.remove(...inactiveClasses);
+        blocksBtn.classList.add(...activeClasses);
       } else if (tab === 'events') {
         eventsTab.classList.remove('hidden');
-        eventsBtn.className = activeClass;
+        eventsBtn.classList.remove(...inactiveClasses);
+        eventsBtn.classList.add(...activeClasses);
       } else if (tab === 'cepin') {
         if (cepinTab) cepinTab.classList.remove('hidden');
-        if (cepinBtn) cepinBtn.className = activeClass;
+        if (cepinBtn) {
+          cepinBtn.classList.remove(...inactiveClasses);
+          cepinBtn.classList.add(...activeClasses);
+        }
         loadCepinFormValues();
       } else if (tab === 'users') {
         if (usersTab) usersTab.classList.remove('hidden');
-        if (usersBtn) usersBtn.className = activeClass;
+        if (usersBtn) {
+          usersBtn.classList.remove(...inactiveClasses);
+          usersBtn.classList.add(...activeClasses);
+        }
         loadUsersTable();
       } else if (tab === 'settings') {
         if (settingsTab) settingsTab.classList.remove('hidden');
-        if (settingsBtn) settingsBtn.className = activeClass;
+        if (settingsBtn) {
+          settingsBtn.classList.remove(...inactiveClasses);
+          settingsBtn.classList.add(...activeClasses);
+        }
         loadSettings();
       }
     }

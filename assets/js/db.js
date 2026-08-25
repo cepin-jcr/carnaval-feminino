@@ -1200,6 +1200,34 @@ async function register(email, password) {
   throw new Error("Conta criada! Sua conta aguarda aprovação da administração.");
 }
 
+async function linkUserToBlocks(user) {
+  if (!user || !user.email) return;
+  const blocks = getBlocks();
+  const userEmail = user.email.toLowerCase();
+  let updatedLocal = false;
+  
+  for (let i = 0; i < blocks.length; i++) {
+    const b = blocks[i];
+    if (b.ownerId !== user.id && b.contato && b.contato.toLowerCase().includes(userEmail)) {
+      b.ownerId = user.id;
+      updatedLocal = true;
+      try {
+        const supabase = await getSupabaseClient();
+        if (supabase) {
+          await supabase.from('blocos').update({ ownerId: user.id }).eq('id', b.id);
+        }
+      } catch (err) {
+        console.error('Error linking block to user in Supabase', err);
+      }
+    }
+  }
+  
+  if (updatedLocal) {
+    localStorage.setItem('bf_blocks', JSON.stringify(blocks));
+    window.dispatchEvent(new CustomEvent('dbSyncComplete'));
+  }
+}
+
 async function login(email, password) {
   const supabase = await getSupabaseClient();
   if (!supabase) throw new Error('Serviço de autenticação temporariamente indisponível.');
@@ -1235,6 +1263,8 @@ async function login(email, password) {
     email: data.user.email,
     isAdmin: isAdmin
   };
+  
+  await linkUserToBlocks(user);
   setCurrentUser(user);
   return user;
 }
@@ -1297,6 +1327,7 @@ async function verifySession() {
         currentUser.email !== updatedUser.email || 
         currentUser.isAdmin !== updatedUser.isAdmin) {
       setCurrentUser(updatedUser);
+      await linkUserToBlocks(updatedUser);
       renderHeader();
       window.dispatchEvent(new CustomEvent('userSessionUpdated'));
     }
