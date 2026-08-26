@@ -171,7 +171,7 @@ const initialDbData = {
       "id": "c9ce7943-bbbb-4a23-a2bf-e579bc30136e",
       "nome": "Não Mexe Comigo que Eu Não Ando Só",
       "descricao": "O Não Mexe surgiu de mulheres que passavam por situações machistas em blocos de carnaval de Porto Alegre. Assim, em 2016, quatro mulheres fizeram uma convocação pelo Facebook e em poucas horas haviam centenas de interessadas. Ele surge como um espaço seguro para que mulheres possam tocar, cantar e performar, e um espaço de luta pela igualdade de gênero e pelo combate à violência contra mulher. Como artivistas, lutamos pela valorização da cultura e dos espaços públicos.\r\nO grupo hoje conta com cerca de 70 mulheres, e outras dezenas que um dia foram ativas na organização e hoje apoiam atividades.\r\nDesde 2016, o Não Mexe realiza ações públicas como cortejos, shows, ensaios abertos, vivências musicais e criativas, oficinas e campanhas digitais, e participa de atos públicos - muitas vezes em parceria com movimentos sociais e espaços da cidade que promovem cultura, arte e luta. O repertório apresenta ritmos brasileiros\r\ncomo samba, coco, ijexá, maracatu, samba-reggae e funk, em músicas majoritariamente compostas por mulheres e/ou com temáticas da luta por igualdade de gênero e combate à violência contra a mulher.\r\nMuito além de batucar, fazer música, executar ritmos, dançar, cantar e \"tocar o terror\", as mulheres deste coletivo querem transformar com a sua arte e a sua presença.",
-      "contato": "(51) 99147-6715 | paulinhamoizes@gmail.com",
+      "contato": "(51) 99147-6715 | marianaomexe@gmail.com",
       "foto": "assets/images/fotos carnaval feminino/Crédito Edi Patzzlaf - Paula S. Moizes.webp",
       "localLat": -30.0324999,
       "localLng": -51.2303767,
